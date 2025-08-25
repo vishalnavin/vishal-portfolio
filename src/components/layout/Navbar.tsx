@@ -21,18 +21,22 @@ export default function Navbar() {
   const [isDarkMode, setIsDarkMode] = useState(true);
 
   useEffect(() => {
-    // Check for saved theme preference or default to dark
+    // Always default to dark mode, only check for saved light preference
     const savedTheme = localStorage.getItem('theme');
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
     
-    if (savedTheme === 'light' || (!savedTheme && !prefersDark)) {
+    if (savedTheme === 'light') {
       setIsDarkMode(false);
       document.documentElement.classList.add('light');
       document.documentElement.classList.remove('dark');
     } else {
+      // Default to dark mode for all new visitors and devices
       setIsDarkMode(true);
       document.documentElement.classList.add('dark');
       document.documentElement.classList.remove('light');
+      // Set dark as default in localStorage if no preference exists
+      if (!savedTheme) {
+        localStorage.setItem('theme', 'dark');
+      }
     }
   }, []);
 
@@ -92,7 +96,7 @@ export default function Navbar() {
       <motion.nav
         initial={{ y: -100 }}
         animate={{ y: 0 }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 mobile-safe-area ${
           isScrolled ? 'glass' : 'bg-transparent'
         }`}
       >
@@ -132,7 +136,7 @@ export default function Navbar() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.8 }}
                 onClick={toggleTheme}
-                className="p-2 rounded-full hover:bg-secondary transition-colors"
+                className="p-2 rounded-full hover:bg-secondary transition-colors mobile-touch-target"
               >
                 {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
               </motion.button>
@@ -142,7 +146,7 @@ export default function Navbar() {
             <Button
               variant="ghost"
               size="sm"
-              className="md:hidden"
+              className="md:hidden mobile-touch-target"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             >
               {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
@@ -165,7 +169,7 @@ export default function Navbar() {
                 <button
                   key={item.name}
                   onClick={() => scrollToSection(item.href)}
-                  className={`nav-link text-left text-sm font-medium ${
+                  className={`nav-link text-left text-sm font-medium mobile-touch-target py-3 ${
                     activeSection === item.href.substring(1) ? 'active' : ''
                   }`}
                 >

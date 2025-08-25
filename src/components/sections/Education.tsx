@@ -73,11 +73,8 @@ export default function Education() {
 
                   {/* Degree Name and Type */}
                   <h3 className="text-xl font-bold mb-2 text-foreground">
-                    {edu.degree}
+                    {edu.degree} {edu.degreeType}
                   </h3>
-                  <p className="text-primary font-medium mb-2">
-                    {edu.degreeType}
-                  </p>
 
                   {/* Institution */}
                   <p className="text-primary font-medium mb-2">

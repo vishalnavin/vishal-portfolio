@@ -7,6 +7,33 @@
 /* Portfolio Design System - Dark with Neon Gradients */
 
 @layer base {
+  /* Mobile-specific optimizations */
+  @media (max-width: 768px) {
+    html {
+      /* Prevent zoom on input focus on iOS */
+      -webkit-text-size-adjust: 100%;
+      /* Smooth scrolling for mobile */
+      scroll-behavior: smooth;
+    }
+    
+    /* Better touch targets for mobile */
+    button, a, [role="button"] {
+      min-height: 44px;
+      min-width: 44px;
+    }
+    
+    /* Disable hover effects on touch devices */
+    @media (hover: none) {
+      .hover\\:scale-105:hover,
+      .hover\\:glow:hover,
+      .hover\\:gradient-text:hover {
+        transform: none !important;
+        box-shadow: none !important;
+        background: none !important;
+      }
+    }
+  }
+
   :root {
     /* Base dark theme with neon accent */
     --background: 220 15% 8%;
@@ -56,6 +83,52 @@
     /* Animation easing */
     --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
     --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+
+  /* Mobile-specific utility classes */
+  .mobile-touch-target {
+    min-height: 44px;
+    min-width: 44px;
+    touch-action: manipulation;
+  }
+
+  .mobile-safe-area {
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  /* Optimize animations for mobile */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  /* Mobile performance optimizations */
+  @media (max-width: 768px) {
+    /* Reduce motion for better mobile performance */
+    .animate-float {
+      animation-duration: 8s;
+    }
+    
+    .animate-gradient-shift {
+      animation-duration: 12s;
+    }
+    
+    /* Optimize glass effect for mobile */
+    .glass {
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+    
+    /* Better touch feedback */
+    .mobile-touch-target:active {
+      transform: scale(0.95);
+      transition: transform 0.1s ease;
+    }
   }
 
   .dark {

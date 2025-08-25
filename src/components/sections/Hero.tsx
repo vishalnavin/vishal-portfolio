@@ -97,7 +97,7 @@ export default function Hero() {
             <Button
               onClick={scrollToProjects}
               size="lg"
-              className="bg-gradient-primary hover:bg-gradient-primary magnetic glow-hover group"
+              className="bg-gradient-primary hover:bg-gradient-primary magnetic glow-hover group mobile-touch-target"
             >
               View Projects
               <ExternalLink className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
@@ -105,7 +105,7 @@ export default function Hero() {
             <Button
               variant="outline"
               size="lg"
-              className="border-border hover:bg-secondary magnetic"
+              className="border-border hover:bg-secondary magnetic mobile-touch-target"
               asChild
             >
               <a href="/Vishal_Navin_CV.pdf" target="_blank" rel="noopener noreferrer">
