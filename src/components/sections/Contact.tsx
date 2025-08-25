@@ -40,6 +40,51 @@ export default function Contact() {
         body: new URLSearchParams(formDataToSend as any).toString()
       });
 
+      console.log('Form submission response:', response.status, response.statusText);
+
+      if (response.ok) {
+        setIsSubmitted(true);
+        setFormData({ name: '', email: '', message: '' });
+        toast({
+          title: "Message sent!",
+          description: "Thank you for your message. I'll get back to you soon.",
+        });
+      } else {
+        const errorText = await response.text();
+        console.error('Form submission failed:', errorText);
+        throw new Error(`Form submission failed: ${response.status}`);
+      }
+    } catch (error) {
+      console.error('Form submission error:', error);
+      toast({
+        title: "Error",
+        description: "Failed to send message. Please try again or contact me directly.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  // Form submission with popup notification
+  const handleFormSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    try {
+      // Create FormData for Netlify
+      const formDataToSend = new FormData();
+      formDataToSend.append('form-name', 'contact');
+      formDataToSend.append('name', formData.name);
+      formDataToSend.append('email', formData.email);
+      formDataToSend.append('message', formData.message);
+
+      const response = await fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(formDataToSend as any).toString()
+      });
+
       if (response.ok) {
         setIsSubmitted(true);
         setFormData({ name: '', email: '', message: '' });
@@ -164,20 +209,15 @@ export default function Contact() {
                   </motion.div>
                 ) : (
                   <form 
-                    onSubmit={handleSubmit}
+                    onSubmit={handleFormSubmit}
                     name="contact"
                     method="POST"
                     data-netlify="true"
                     data-netlify-honeypot="bot-field"
-                    netlify
                   >
                     <input type="hidden" name="form-name" value="contact" />
                     {/* Honeypot field */}
                     <input type="hidden" name="bot-field" />
-                    {/* Hidden form for Netlify */}
-                    <input type="hidden" name="name" />
-                    <input type="hidden" name="email" />
-                    <input type="hidden" name="message" />
                     
                     <div className="space-y-6">
                       <div>
