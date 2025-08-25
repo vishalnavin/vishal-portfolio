@@ -84,12 +84,12 @@ export default function Skills() {
           </motion.div>
 
           {/* Skills Categories */}
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
             {skillCategories.map((category, categoryIndex) => (
               <motion.div
                 key={category.title}
                 variants={itemVariants}
-                className="glass p-8 rounded-2xl card-hover relative overflow-hidden group"
+                className="glass p-6 md:p-8 rounded-2xl card-hover relative overflow-hidden group"
                 whileHover={{ 
                   scale: 1.02,
                   boxShadow: "0 20px 40px rgba(139, 92, 246, 0.1)"

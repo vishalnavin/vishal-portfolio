@@ -44,13 +44,13 @@ export default function Education() {
 
           {/* Education Cards */}
           <div className="max-w-4xl mx-auto">
-            <div className="grid md:grid-cols-2 gap-8">
+            <div className="grid sm:grid-cols-2 gap-6 md:gap-8">
               {education.map((edu, index) => (
                 <motion.div
                   key={index}
                   variants={itemVariants}
                   whileHover={{ scale: 1.02, y: -5 }}
-                  className="glass p-6 rounded-2xl card-hover"
+                  className="glass p-4 md:p-6 rounded-2xl card-hover"
                 >
                   {/* Icon */}
                   <div className="w-12 h-12 rounded-lg bg-gradient-primary flex items-center justify-center mb-4">

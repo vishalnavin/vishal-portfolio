@@ -177,7 +177,7 @@ export default function Contact() {
             </p>
           </motion.div>
 
-          <div className="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
+          <div className="grid lg:grid-cols-2 gap-8 md:gap-12 max-w-6xl mx-auto">
             {/* Contact Info */}
             <motion.div variants={itemVariants} className="space-y-8">
               <div>
@@ -189,7 +189,7 @@ export default function Contact() {
                 </p>
               </div>
 
-              <div className="space-y-6">
+              <div className="space-y-4 md:space-y-6">
                 {contactInfo.map((info, index) => (
                   <motion.a
                     key={info.label}
@@ -199,7 +199,7 @@ export default function Contact() {
                     initial={{ opacity: 0, x: -20 }}
                     animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
                     transition={{ delay: 0.5 + index * 0.1, duration: 0.5 }}
-                    className="glass p-6 rounded-xl card-hover flex items-center gap-4 group"
+                    className="glass p-4 md:p-6 rounded-xl card-hover flex items-center gap-3 md:gap-4 group"
                   >
                     <div className="w-12 h-12 rounded-lg bg-gradient-primary flex items-center justify-center">
                       <info.icon className="h-6 w-6 text-primary-foreground" />
@@ -217,7 +217,7 @@ export default function Contact() {
 
             {/* Contact Form */}
             <motion.div variants={itemVariants}>
-              <div className="glass p-8 rounded-2xl">
+              <div className="glass p-6 md:p-8 rounded-2xl">
                 {isSubmitted ? (
                   <motion.div
                     initial={{ opacity: 0, scale: 0.95 }}

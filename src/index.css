@@ -98,6 +98,28 @@
     padding-bottom: env(safe-area-inset-bottom);
   }
 
+  /* Mobile-specific improvements */
+  @media (max-width: 768px) {
+    /* Better text readability on mobile */
+    .text-4xl { font-size: 2rem; }
+    .text-5xl { font-size: 2.5rem; }
+    .text-6xl { font-size: 3rem; }
+    
+    /* Improved spacing for mobile */
+    .container { padding-left: 1rem; padding-right: 1rem; }
+    
+    /* Better button sizing for mobile */
+    .btn-mobile { padding: 0.75rem 1.5rem; font-size: 1rem; }
+    
+    /* Improved card spacing */
+    .card-mobile { margin-bottom: 1rem; }
+  }
+
+  /* Tablet-specific improvements */
+  @media (min-width: 769px) and (max-width: 1024px) {
+    .container { padding-left: 1.5rem; padding-right: 1.5rem; }
+  }
+
   /* Optimize animations for mobile */
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {

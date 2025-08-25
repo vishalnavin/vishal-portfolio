@@ -29,11 +29,11 @@ export default function Articles() {
           animate={isInView ? "visible" : "hidden"}
         >
           {/* Section Header */}
-          <motion.div variants={itemVariants} className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">
+          <motion.div variants={itemVariants} className="text-center mb-12 md:mb-16">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
               Writing on <span className="gradient-text">Data, AI & Analytics</span>
             </h2>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto px-4">
               Occasional essays where I share ideas and lessons from my work in data science and analytics.
             </p>
           </motion.div>
@@ -49,7 +49,7 @@ export default function Articles() {
                   className="group cursor-pointer"
                   onClick={() => window.open(article.url, '_blank')}
                 >
-                  <div className="glass p-6 rounded-2xl card-hover relative overflow-hidden">
+                  <div className="glass p-4 md:p-6 rounded-2xl card-hover relative overflow-hidden">
                     {/* Article Content */}
                     <div className="space-y-4">
                       <div className="flex items-start justify-between">

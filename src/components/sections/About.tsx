@@ -30,22 +30,22 @@ export default function About() {
             </p>
           </motion.div>
 
-          <div className="grid lg:grid-cols-2 gap-0 items-stretch">
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-0 items-stretch">
             {/* Bio */}
-            <motion.div variants={itemVariants} className="pr-6">
-              <div className="glass p-8 rounded-2xl h-full flex flex-col justify-center">
-                <p className="text-lg text-foreground/90 leading-relaxed mb-6">
+            <motion.div variants={itemVariants} className="lg:pr-6 order-2 lg:order-1">
+              <div className="glass p-6 md:p-8 rounded-2xl h-full flex flex-col justify-center">
+                <p className="text-base md:text-lg text-foreground/90 leading-relaxed mb-4 md:mb-6">
                   I'm a data scientist with a computer science foundation, experienced across the stack—from PySpark pipelines and feature engineering to modelling and decision-ready visuals. My focus is on building solutions that are practical, explainable, and ready to deploy.
                 </p>
-                <p className="text-lg text-foreground/90 leading-relaxed">
+                <p className="text-base md:text-lg text-foreground/90 leading-relaxed">
                   Recent work includes churn and retention modelling, player-behaviour segmentation, and geospatial analysis to support product and strategy. Photography and travel sharpen my eye for patterns and context — the same instincts I bring to data storytelling.
                 </p>
               </div>
             </motion.div>
 
             {/* Profile Image */}
-            <motion.div variants={itemVariants} className="pl-6">
-              <div className="relative h-full">
+            <motion.div variants={itemVariants} className="lg:pl-6 order-1 lg:order-2">
+              <div className="relative h-64 md:h-full">
                 <img 
                   src="/vishal-profile.jpg" 
                   alt="Vishal Navin" 

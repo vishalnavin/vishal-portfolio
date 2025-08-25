@@ -133,7 +133,7 @@ export default function Projects() {
           {/* Projects Grid */}
           <motion.div
             layout
-            className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto"
+            className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 max-w-7xl mx-auto"
           >
             {displayedProjects.map((project, index) => (
               <motion.div
@@ -149,7 +149,7 @@ export default function Projects() {
                 whileHover={{ y: -5 }}
                 className="group"
               >
-                <div className="glass p-6 rounded-2xl h-full card-hover group-hover:glow relative overflow-hidden">
+                <div className="glass p-4 md:p-6 rounded-2xl h-full card-hover group-hover:glow relative overflow-hidden">
                   {/* Project Image */}
                   <div className="w-full h-32 rounded-lg mb-4 overflow-hidden">
                     <img
@@ -189,7 +189,7 @@ export default function Projects() {
                   </div>
 
                   {/* CTAs */}
-                  <div className="flex gap-2">
+                  <div className="flex flex-col sm:flex-row gap-2">
                     <Button
                       size="sm"
                       variant="outline"

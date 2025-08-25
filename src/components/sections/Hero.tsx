@@ -43,7 +43,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
-            className="text-6xl md:text-8xl font-bold mb-6 gradient-text animate-gradient-shift"
+            className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-bold mb-4 md:mb-6 gradient-text animate-gradient-shift"
             style={{ backgroundSize: '200% 200%' }}
           >
             Vishal Navin
@@ -54,13 +54,13 @@ export default function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6 }}
-            className="mb-8"
+            className="mb-6 md:mb-8"
           >
             <motion.span
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.8 }}
-              className="text-3xl md:text-4xl font-bold gradient-text bg-gradient-to-r from-primary via-accent-secondary to-primary bg-clip-text text-transparent animate-gradient-shift"
+              className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold gradient-text bg-gradient-to-r from-primary via-accent-secondary to-primary bg-clip-text text-transparent animate-gradient-shift leading-tight"
               style={{ backgroundSize: '200% 200%' }}
             >
               Data Scientist — ML, Analytics, Visualisations
@@ -72,7 +72,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.8 }}
-            className="text-xl md:text-2xl text-muted-foreground mb-6 max-w-3xl mx-auto"
+            className="text-lg sm:text-xl md:text-2xl text-muted-foreground mb-4 md:mb-6 max-w-3xl mx-auto px-4"
           >
             I turn messy data into clear, actionable insight with pragmatic ML, reliable pipelines, and visuals that drive decisions.
           </motion.p>
@@ -82,7 +82,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1 }}
-            className="text-lg text-muted-foreground mb-12 max-w-2xl mx-auto"
+            className="text-base sm:text-lg text-muted-foreground mb-8 md:mb-12 max-w-2xl mx-auto px-4"
           >
             (MSc Business Analytics (Imperial College London)
           </motion.p>
@@ -92,7 +92,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.2 }}
-            className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16"
+            className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mb-12 md:mb-16 px-4"
           >
             <Button
               onClick={scrollToProjects}
@@ -120,15 +120,15 @@ export default function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.4 }}
-            className="flex items-center justify-center gap-8 text-sm text-muted-foreground"
+            className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-8 text-sm text-muted-foreground px-4"
           >
             <div className="flex items-center gap-2">
               <MapPin className="h-4 w-4" />
               <span>London, UK</span>
             </div>
-            <div className="h-4 w-px bg-border" />
+            <div className="hidden sm:block h-4 w-px bg-border" />
             <span>2 Years Experience</span>
-            <div className="h-4 w-px bg-border" />
+            <div className="hidden sm:block h-4 w-px bg-border" />
             <span>15+ Projects</span>
           </motion.div>
         </motion.div>

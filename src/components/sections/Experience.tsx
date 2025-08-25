@@ -104,7 +104,7 @@ export default function Experience() {
                     <motion.div
                       whileHover={{ scale: 1.05, y: -10, rotateY: 5 }}
                       whileTap={{ scale: 0.98 }}
-                      className="glass p-8 rounded-2xl card-hover relative overflow-hidden"
+                      className="glass p-6 md:p-8 rounded-2xl card-hover relative overflow-hidden"
                     >
                       {/* Animated background gradient */}
                       <motion.div
@@ -121,7 +121,7 @@ export default function Experience() {
                         >
                           {exp.title}
                         </motion.h3>
-                        <div className="flex items-center gap-4 text-sm text-muted-foreground mb-2">
+                        <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-sm text-muted-foreground mb-2">
                           <motion.div 
                             className="flex items-center gap-1"
                             whileHover={{ scale: 1.05 }}
