@@ -28,16 +28,16 @@ export default function Contact() {
 
     try {
       // Create FormData for Netlify
-      const form = new FormData();
-      form.append('form-name', 'contact');
-      form.append('name', formData.name);
-      form.append('email', formData.email);
-      form.append('message', formData.message);
+      const formDataToSend = new FormData();
+      formDataToSend.append('form-name', 'contact');
+      formDataToSend.append('name', formData.name);
+      formDataToSend.append('email', formData.email);
+      formDataToSend.append('message', formData.message);
 
       const response = await fetch('/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams(form as any).toString()
+        body: new URLSearchParams(formDataToSend as any).toString()
       });
 
       if (response.ok) {
@@ -51,6 +51,7 @@ export default function Contact() {
         throw new Error('Form submission failed');
       }
     } catch (error) {
+      console.error('Form submission error:', error);
       toast({
         title: "Error",
         description: "Failed to send message. Please try again or contact me directly.",
@@ -168,6 +169,7 @@ export default function Contact() {
                     method="POST"
                     data-netlify="true"
                     data-netlify-honeypot="bot-field"
+                    netlify
                   >
                     <input type="hidden" name="form-name" value="contact" />
                     {/* Honeypot field */}
