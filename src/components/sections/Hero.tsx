@@ -63,7 +63,7 @@ export default function Hero() {
               className="text-3xl md:text-4xl font-bold gradient-text bg-gradient-to-r from-primary via-accent-secondary to-primary bg-clip-text text-transparent animate-gradient-shift"
               style={{ backgroundSize: '200% 200%' }}
             >
-              Data Scientist in London
+              A Data Scientist in London
             </motion.span>
           </motion.div>
 
@@ -108,7 +108,7 @@ export default function Hero() {
               className="border-border hover:bg-secondary magnetic"
               asChild
             >
-              <a href="/assets/Vishal_Navin_CV.pdf" target="_blank" rel="noopener noreferrer">
+              <a href="/Vishal_Navin_CV.pdf" target="_blank" rel="noopener noreferrer">
                 <Download className="mr-2 h-4 w-4" />
                 Download CV
               </a>
