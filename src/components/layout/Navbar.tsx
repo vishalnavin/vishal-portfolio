@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Menu, X, Sun, Moon } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const navigation = [
@@ -18,28 +18,7 @@ export default function Navbar() {
   const [activeSection, setActiveSection] = useState('home');
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isDarkMode, setIsDarkMode] = useState(true);
-
-  useEffect(() => {
-    // Always default to dark mode, only check for saved light preference
-    const savedTheme = localStorage.getItem('theme');
-    
-    if (savedTheme === 'light') {
-      setIsDarkMode(false);
-      document.documentElement.classList.add('light');
-      document.documentElement.classList.remove('dark');
-    } else {
-      // Default to dark mode for all new visitors and devices
-      setIsDarkMode(true);
-      document.documentElement.classList.add('dark');
-      document.documentElement.classList.remove('light');
-      // Set dark as default in localStorage if no preference exists
-      if (!savedTheme) {
-        localStorage.setItem('theme', 'dark');
-      }
-    }
-  }, []);
-
+  // Removed light mode functionality - always dark mode
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
@@ -72,20 +51,7 @@ export default function Navbar() {
     setIsMobileMenuOpen(false);
   };
 
-  const toggleTheme = () => {
-    const newTheme = !isDarkMode;
-    setIsDarkMode(newTheme);
-    
-    if (newTheme) {
-      document.documentElement.classList.remove('light');
-      document.documentElement.classList.add('dark');
-      localStorage.setItem('theme', 'dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-      document.documentElement.classList.add('light');
-      localStorage.setItem('theme', 'light');
-    }
-  };
+  // Theme toggle removed - always dark mode
 
   const openLinkedIn = () => {
     window.open('https://www.linkedin.com/in/vishal-navin/', '_blank');
@@ -130,16 +96,7 @@ export default function Navbar() {
                 </motion.button>
               ))}
               
-              {/* Theme Toggle */}
-              <motion.button
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.8 }}
-                onClick={toggleTheme}
-                className="p-2 rounded-full hover:bg-secondary transition-colors mobile-touch-target"
-              >
-                {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
-              </motion.button>
+              {/* Theme toggle removed - always dark mode */}
             </div>
 
             {/* Mobile Menu Button */}
