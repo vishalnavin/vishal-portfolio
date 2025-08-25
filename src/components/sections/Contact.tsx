@@ -96,7 +96,8 @@ export default function Contact() {
         formDataToSend.append('email', formData.email);
         formDataToSend.append('message', formData.message);
 
-        const response = await fetch('/', {
+        // Submit to Netlify using the correct endpoint
+        const response = await fetch('/form', {
           method: 'POST',
           headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
           body: new URLSearchParams(formDataToSend as any).toString()
