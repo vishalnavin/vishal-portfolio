@@ -8,11 +8,7 @@ export default function About() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
-  const stats = [
-    { icon: Calendar, label: 'Experience', value: '2+ Years' },
-    { icon: User, label: 'Projects', value: '15+ Completed' },
-    { icon: MapPin, label: 'Location', value: 'London, UK' }
-  ];
+
 
   return (
     <section id="about" className="py-24 bg-secondary/20">
@@ -42,7 +38,7 @@ export default function About() {
                   I'm a data scientist with a computer science foundation, experienced across the stack—from PySpark pipelines and feature engineering to modelling and decision-ready visuals. My focus is on building solutions that are practical, explainable, and ready to deploy.
                 </p>
                 <p className="text-lg text-foreground/90 leading-relaxed">
-                  Recent work includes churn and retention modelling, player-behaviour segmentation, and geospatial analysis to support product and strategy. Outside of work, I enjoy photography, travelling, and playing football/tennis—interests that keep me both creative and competitive.
+                  Recent work includes churn and retention modelling, player-behaviour segmentation, and geospatial analysis to support product and strategy. Photography and travel sharpen my eye for patterns and context — the same instincts I bring to data storytelling.
                 </p>
               </div>
             </motion.div>
@@ -60,29 +56,7 @@ export default function About() {
             </motion.div>
           </div>
 
-          {/* Stats Grid */}
-          <motion.div variants={itemVariants} className="mt-16">
-            <div className="grid grid-cols-3 gap-6">
-              {stats.map((stat, index) => (
-                <motion.div
-                  key={stat.label}
-                  variants={itemVariants}
-                  whileHover={{ scale: 1.05 }}
-                  className="glass p-6 rounded-xl text-center card-hover"
-                >
-                  <div className="inline-flex items-center justify-center w-12 h-12 rounded-lg bg-gradient-primary mb-4">
-                    <stat.icon className="h-6 w-6 text-primary-foreground" />
-                  </div>
-                  <div className="text-xl font-bold gradient-text mb-1">
-                    {stat.value}
-                  </div>
-                  <div className="text-sm text-muted-foreground">
-                    {stat.label}
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
+
 
 
         </motion.div>

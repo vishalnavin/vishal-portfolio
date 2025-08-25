@@ -63,7 +63,7 @@ export default function Hero() {
               className="text-3xl md:text-4xl font-bold gradient-text bg-gradient-to-r from-primary via-accent-secondary to-primary bg-clip-text text-transparent animate-gradient-shift"
               style={{ backgroundSize: '200% 200%' }}
             >
-              A Data Scientist in London
+              Data Scientist — ML, Analytics, Visualisations
             </motion.span>
           </motion.div>
 
@@ -74,17 +74,17 @@ export default function Hero() {
             transition={{ delay: 0.8 }}
             className="text-xl md:text-2xl text-muted-foreground mb-6 max-w-3xl mx-auto"
           >
-            I turn messy data into clear, actionable insights—combining pragmatic ML, reliable pipelines, and visuals that drive decisions.
+            I turn messy data into clear, actionable insight with pragmatic ML, reliable pipelines, and visuals that drive decisions.
           </motion.p>
 
-          {/* Subtext */}
+          {/* Meta line */}
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1 }}
             className="text-lg text-muted-foreground mb-12 max-w-2xl mx-auto"
           >
-            MSc Business Analytics (Imperial).
+            (MSc Business Analytics (Imperial College London)
           </motion.p>
 
           {/* CTAs */}

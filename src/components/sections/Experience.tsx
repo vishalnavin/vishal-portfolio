@@ -11,10 +11,10 @@ const experiences = [
     location: 'London',
     period: 'Jan 2025 – May 2025',
     description: [
-      'PySpark/Databricks pipelines; engineered 40+ behavioural features',
-      'Predictive churn (Random Forest) + K-Means segments for retention insights',
-      'Geospatial analysis (Tableau heatmaps) → design decisions',
-      'Integrated event-level data to track engagement evolution'
+      'Engineered 40+ behavioural features in PySpark/Databricks to model churn and retention.',
+      'Built Random Forest churn models and K-Means retention segments to target interventions.',
+      'Ran geospatial heatmaps in Tableau to inform GTA Online design decisions.',
+      'Integrated event-level telemetry to track engagement shifts over time and segments.'
     ]
   },
   {
@@ -23,9 +23,9 @@ const experiences = [
     location: 'London',
     period: 'Jun 2024 – Aug 2024',
     description: [
-      'Revenue forecasting uplift +13% via ML (Random Forest)',
-      'Lagged variables + volatility indicators improved reliability',
-      'Shifted team to quantitative framework; 500k-row ETL sped up −30% (Python/SQL)'
+      'Delivered +13% revenue-forecast accuracy via Random Forest with lag/volatility features.',
+      'Reduced ETL runtime by 30% on 500k+ rows by re-engineering Python/SQL pipelines.',
+      'Introduced a quantitative forecasting framework for decision-ready reporting.'
     ]
   },
   {
@@ -34,18 +34,19 @@ const experiences = [
     location: 'Eswatini',
     period: 'Jun 2022 – Jul 2023',
     description: [
-      'RFM + K-Means segmentation; retention +10%',
-      'Stock allocation guidance; saved ~£24k/yr, efficiency +25%'
+      'RFM + K-Means increased retention +10%.',
+      'Stock allocation guidance saved ~£24k/year and boosted efficiency +25%.',
+      'Delivered dashboards that accelerated operational decisions.'
     ]
   },
   {
-    title: 'Data Scientist (Intern)',
+    title: 'Data Scientist Intern',
     company: 'Pricerite Wholesalers',
     location: 'Eswatini',
     period: 'Jul 2021 – Sep 2021',
     description: [
-      'SQL + EDA reporting → segmentation sharpened (conversions +5%)',
-      'Competitor analysis informed changes → market share +7%'
+      'SQL + EDA improved customer segmentation; conversions +5%.',
+      'Competitor analysis informed strategy; market share +7%.'
     ]
   }
 ];
@@ -156,7 +157,7 @@ export default function Experience() {
                               delay: 0.5 + index * 0.1 + i * 0.1,
                               duration: 0.5
                             }}
-                            className="flex items-start gap-3 text-sm text-foreground/90"
+                            className="flex items-start gap-3 text-base text-foreground/90"
                           >
                             <div className="w-1.5 h-1.5 rounded-full bg-primary mt-2 flex-shrink-0" />
                             <span>{item}</span>

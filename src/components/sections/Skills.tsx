@@ -50,7 +50,7 @@ export default function Skills() {
               Skills & <span className="gradient-text">Expertise</span>
             </h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Technologies and methodologies I use to solve complex problems
+              Technologies and methods I use to deliver outcomes.
             </p>
           </motion.div>
 

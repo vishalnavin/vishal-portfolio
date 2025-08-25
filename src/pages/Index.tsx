@@ -17,16 +17,16 @@ const Index = () => {
       <CustomCursor />
       <ScrollProgress />
       <Navbar />
-                  <main>
-              <Hero />
-              <About />
-              <Education />
-              <Skills />
-              <Experience />
-              <Projects />
-              <Articles />
-              <Contact />
-            </main>
+      <main>
+        <Hero />
+        <About />
+        <Education />
+        <Skills />
+        <Experience />
+        <Projects />
+        <Articles />
+        <Contact />
+      </main>
       <Footer />
     </div>
   );

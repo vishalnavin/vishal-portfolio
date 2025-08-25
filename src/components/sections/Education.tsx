@@ -1,35 +1,21 @@
 import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
 import { useRef } from 'react';
-import { GraduationCap, Calendar, MapPin } from 'lucide-react';
+import { GraduationCap, Calendar, MapPin, Building } from 'lucide-react';
 import { containerVariants, itemVariants } from '@/components/common/AnimationVariants';
 
 const education = [
   {
     degree: 'Business Analytics',
     degreeType: 'MSc',
-    institution: 'Imperial College London',
-    location: 'London, UK',
-    period: 'Aug 2023 – Aug 2024',
-    description: 'Specialized in data science, machine learning, and business analytics. Key modules included Advanced Analytics, Machine Learning, and Data Visualization.',
-    achievements: [
-      'Distinction grade achieved',
-      'Capstone project on customer churn prediction',
-      'Member of Data Science Society'
-    ]
+    institution: 'Imperial College London, UK',
+    period: 'Aug 2023 – Aug 2024'
   },
   {
     degree: 'Computer Science',
     degreeType: 'BSc',
-    institution: 'University of Leicester',
-    location: 'Leicester, UK',
-    period: '2019 – 2022',
-    description: 'Comprehensive computer science foundation with focus on software engineering, algorithms, and data structures.',
-    achievements: [
-      'First Class Honours',
-      'Final year project on machine learning applications',
-      'Programming Society committee member'
-    ]
+    institution: 'University of Leicester, UK',
+    period: '2019 – 2022'
   }
 ];
 
@@ -71,7 +57,7 @@ export default function Education() {
                     <GraduationCap className="h-6 w-6 text-primary-foreground" />
                   </div>
 
-                  {/* Degree Name and Type */}
+                  {/* Degree */}
                   <h3 className="text-xl font-bold mb-2 text-foreground">
                     {edu.degree} {edu.degreeType}
                   </h3>
@@ -83,7 +69,7 @@ export default function Education() {
 
                   {/* Period */}
                   <p className="text-muted-foreground text-sm">
-                    {index === 0 ? 'Aug 2023 – Aug 2024' : '2019 – 2022'}
+                    {edu.period}
                   </p>
                 </motion.div>
               ))}
