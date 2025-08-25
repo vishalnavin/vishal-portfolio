@@ -79,11 +79,14 @@ export default function Contact() {
       formDataToSend.append('email', formData.email);
       formDataToSend.append('message', formData.message);
 
-      const response = await fetch('/', {
+      // Use the current page URL for submission
+      const response = await fetch(window.location.href, {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: new URLSearchParams(formDataToSend as any).toString()
       });
+
+      console.log('Form submission response:', response.status, response.statusText);
 
       if (response.ok) {
         setIsSubmitted(true);
@@ -93,7 +96,9 @@ export default function Contact() {
           description: "Thank you for your message. I'll get back to you soon.",
         });
       } else {
-        throw new Error('Form submission failed');
+        const errorText = await response.text();
+        console.error('Form submission failed:', errorText);
+        throw new Error(`Form submission failed: ${response.status}`);
       }
     } catch (error) {
       console.error('Form submission error:', error);
@@ -136,7 +141,7 @@ export default function Contact() {
   ];
 
   return (
-    <section id="contact" className="py-24">
+    <section id="contact" className="py-24 bg-secondary/20">
       <div className="container mx-auto px-6">
         <motion.div
           ref={ref}

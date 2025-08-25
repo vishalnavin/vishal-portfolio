@@ -36,7 +36,7 @@ export default function Skills() {
   const marqueeSkills = [...allSkills, ...allSkills]; // Duplicate for seamless loop
 
   return (
-    <section id="skills" className="py-24">
+    <section id="skills" className="py-24 bg-secondary/20">
       <div className="container mx-auto px-6">
         <motion.div
           ref={ref}
