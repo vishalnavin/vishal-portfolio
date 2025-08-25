@@ -81,9 +81,9 @@ export default function Education() {
                     {edu.institution}
                   </p>
 
-                  {/* Period and Achievement */}
+                  {/* Period */}
                   <p className="text-muted-foreground text-sm">
-                    {index === 0 ? 'Merit • Aug 2023 – Aug 2024' : 'First-Class Honours • 2019 – 2022'}
+                    {index === 0 ? 'Aug 2023 – Aug 2024' : '2019 – 2022'}
                   </p>
                 </motion.div>
               ))}
