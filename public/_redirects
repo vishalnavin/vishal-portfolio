@@ -1,0 +1,5 @@
+# Netlify redirects
+/form  /form.html  200
+
+# Handle client-side routing
+/*    /index.html  200
