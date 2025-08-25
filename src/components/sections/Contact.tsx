@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
 import { useRef } from 'react';
@@ -21,6 +21,8 @@ export default function Contact() {
   const { toast } = useToast();
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+
+  // Success notification will be handled by Netlify's default behavior
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -72,33 +74,48 @@ export default function Contact() {
     setIsSubmitting(true);
 
     try {
-      // Create FormData for Netlify
-      const formDataToSend = new FormData();
-      formDataToSend.append('form-name', 'contact');
-      formDataToSend.append('name', formData.name);
-      formDataToSend.append('email', formData.email);
-      formDataToSend.append('message', formData.message);
-
-      // Use the current page URL for submission
-      const response = await fetch(window.location.href, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams(formDataToSend as any).toString()
-      });
-
-      console.log('Form submission response:', response.status, response.statusText);
-
-      if (response.ok) {
+      // Check if we're in development or production
+      const isDevelopment = window.location.hostname === 'localhost';
+      
+      if (isDevelopment) {
+        // In development, simulate success
+        console.log('Development mode - simulating form submission');
+        await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate network delay
+        
         setIsSubmitted(true);
         setFormData({ name: '', email: '', message: '' });
         toast({
-          title: "Message sent!",
-          description: "Thank you for your message. I'll get back to you soon.",
+          title: "Message sent! (Development Mode)",
+          description: "Form submission simulated. This will work on the live site.",
         });
       } else {
-        const errorText = await response.text();
-        console.error('Form submission failed:', errorText);
-        throw new Error(`Form submission failed: ${response.status}`);
+        // In production (Netlify), submit to the actual form
+        const formDataToSend = new FormData();
+        formDataToSend.append('form-name', 'contact');
+        formDataToSend.append('name', formData.name);
+        formDataToSend.append('email', formData.email);
+        formDataToSend.append('message', formData.message);
+
+        const response = await fetch('/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: new URLSearchParams(formDataToSend as any).toString()
+        });
+
+        console.log('Form submission response:', response.status, response.statusText);
+
+        if (response.ok) {
+          setIsSubmitted(true);
+          setFormData({ name: '', email: '', message: '' });
+          toast({
+            title: "Message sent!",
+            description: "Thank you for your message. I'll get back to you soon.",
+          });
+        } else {
+          const errorText = await response.text();
+          console.error('Form submission failed:', errorText);
+          throw new Error(`Form submission failed: ${response.status}`);
+        }
       }
     } catch (error) {
       console.error('Form submission error:', error);
