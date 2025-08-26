@@ -65,7 +65,12 @@ const ChatWidget: React.FC = () => {
     setIsLoading(true);
 
     try {
-      const response = await fetch('/api/chat', {
+      // Use the correct endpoint for both local and production
+      const apiUrl = process.env.NODE_ENV === 'development' 
+        ? '/.netlify/functions/chat' 
+        : '/api/chat';
+      
+      const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -85,6 +90,11 @@ const ChatWidget: React.FC = () => {
         content: data.answer,
         sources: data.sources,
       };
+
+      // Show a special indicator if API limits are hit
+      if (data.apiLimit) {
+        assistantMessage.content += '\n\n⚠️ Note: This is a fallback response due to API limits.';
+      }
 
       setMessages(prev => [...prev, assistantMessage]);
     } catch (error) {
