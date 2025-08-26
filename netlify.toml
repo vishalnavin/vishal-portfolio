@@ -6,7 +6,7 @@
   directory = "netlify/functions"
   node_bundler = "esbuild"
   external_node_modules = ["openai", "@pinecone-database/pinecone"]
-  included_files = ["netlify/functions/*.cjs"]
+  included_files = ["netlify/functions/*.js"]
 
 [[redirects]]
   from = "/api/chat"
