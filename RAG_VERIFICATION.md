@@ -195,3 +195,45 @@ The RAG chatbot implementation is **functionally complete** but **blocked by a P
 5. **Merge PR** to deploy to production
 
 **Deployment Status**: ✅ **READY FOR DEPLOY PREVIEW**
+
+---
+
+## Production Triage (26 Aug 2025)
+
+### Required Environment Variables (Production)
+Confirm these 6 variables are set in Netlify → Site settings → Environment variables → Production:
+- `OPENAI_API_KEY` (sk-proj-****)
+- `OPENAI_EMBED_MODEL` = text-embedding-3-small
+- `OPENAI_CHAT_MODEL` = gpt-4o-mini
+- `PINECONE_API_KEY` (pcsk_****)
+- `PINECONE_INDEX` = **vishal-portfolio-1536** ⭐
+- `BOT_SYSTEM_PROMPT` = "You are Vishal's portfolio assistant..."
+
+### Production Test Commands
+Test the function directly:
+```bash
+curl -X POST https://vishalnavin.com/.netlify/functions/chat \
+  -H "Content-Type: application/json" \
+  -d '{"question":"What did Vishal do at Rockstar?"}'
+```
+
+Test the API redirect:
+```bash
+curl -X POST https://vishalnavin.com/api/chat \
+  -H "Content-Type: application/json" \
+  -d '{"question":"What did Vishal do at Rockstar?"}'
+```
+
+### Function Logs Location
+- **Netlify Dashboard** → **Deploys** → **Latest deploy** → **Functions** → **chat** → **View function logs**
+
+### Expected Results
+- **HTTP 200**: Function working correctly
+- **JSON response**: `{"answer":"...","sources":[...]}`
+- **Sources array**: Should contain 3-4 source objects with `idx`, `title`, `source`
+
+### Common Issues
+- **404**: Function not deployed - trigger new deploy
+- **401/403**: Missing API keys - check environment variables
+- **500**: Dimension mismatch - verify `PINECONE_INDEX=vishal-portfolio-1536`
+- **CORS**: Check function CORS headers (should be handled automatically)
