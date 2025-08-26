@@ -10,7 +10,7 @@ const articles = [
     title: "Vibe Coding Won't Kill Analysts, It'll Expose Average Analysis",
     excerpt: "Exploring how AI coding tools are reshaping the analytics landscape and what this means for data professionals.",
     readTime: "5 min read",
-    year: "2024",
+    year: "2025",
     url: "https://medium.com/@vishalnavin_32974/vibe-coding-wont-kill-analysts-it-ll-expose-average-analysis-29825f48e5d8"
   }
 ];
