@@ -65,10 +65,8 @@ const ChatWidget: React.FC = () => {
     setIsLoading(true);
 
     try {
-      // Use the correct endpoint for both local and production
-      const apiUrl = process.env.NODE_ENV === 'development' 
-        ? '/.netlify/functions/chat' 
-        : '/api/chat';
+      // Use the direct function endpoint for both local and production
+      const apiUrl = '/.netlify/functions/chat';
       
       const response = await fetch(apiUrl, {
         method: 'POST',
