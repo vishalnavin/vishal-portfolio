@@ -1,29 +1,16 @@
-# Professional Experience
+# CV Highlights
 
-## Senior Software Engineer - TechCorp (2022-Present)
-- Led development of microservices architecture serving 1M+ users
-- Implemented CI/CD pipelines reducing deployment time by 60%
-- Mentored junior developers and conducted code reviews
+- **Rockstar Games — Data Science Intern (2025)**  
+  Analysed GTA Online player behaviour using PySpark and Databricks, developed sequential models of player activity, retention labels, and churn analysis.  
 
-## Full Stack Developer - StartupXYZ (2020-2022)
-- Built React-based dashboard with real-time analytics
-- Integrated third-party APIs and payment systems
-- Optimized database queries improving performance by 40%
+- **Coalition Greenwich — Associate Consultant (2024)**  
+  Built revenue prediction models for banking clients using Random Forests and Gradient Boosting, applied feature engineering, and delivered insights to stakeholders.  
 
-## Junior Developer - WebSolutions (2019-2020)
-- Developed responsive web applications using React and Node.js
-- Collaborated with design team on UI/UX improvements
-- Participated in agile development processes
+- **Pricerite Wholesalers — Business Analyst (2022–2023)**  
+  Optimised inventory using forecasting models, applied RFM churn segmentation, and improved supply chain efficiency.  
 
-## Education
+- **MSc Business Analytics, Imperial College London (Merit, 2024)**  
+  Coursework in ML, optimisation, statistics, causal modelling, text analytics, and consulting projects.  
 
-**Bachelor of Science in Computer Science**
-University of Technology, 2019
-- GPA: 3.8/4.0
-- Relevant coursework: Data Structures, Algorithms, Database Systems, Web Development
-
-## Certifications
-
-- AWS Certified Developer Associate
-- Google Cloud Professional Developer
-- MongoDB Certified Developer
+- **BSc Computer Science, University of Leicester (First Class, 2022)**  
+  Dissertation: retro-style game development; projects in Python, algorithms, and systems.

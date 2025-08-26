@@ -1,19 +1,4 @@
-# About Vishal Navin
+# About Vishal
+Vishal Navin is a data scientist based in London with a strong foundation in computer science and analytics consulting. He specialises in transforming complex datasets into actionable insights, with experience across PySpark pipelines, feature engineering, clustering, predictive modelling, and visualisation.  
 
-I'm a passionate software engineer with expertise in full-stack development, machine learning, and cloud technologies. With over 5 years of experience, I specialize in building scalable web applications and AI-powered solutions.
-
-## Skills & Technologies
-
-- **Frontend**: React, TypeScript, Next.js, Tailwind CSS
-- **Backend**: Node.js, Python, FastAPI, Express
-- **Database**: PostgreSQL, MongoDB, Redis
-- **Cloud**: AWS, Google Cloud, Docker, Kubernetes
-- **AI/ML**: TensorFlow, PyTorch, OpenAI API, LangChain
-
-## Experience
-
-I've worked on various projects ranging from e-commerce platforms to AI chatbots and data analytics tools. My approach combines technical excellence with user-centered design principles.
-
-## Education
-
-Bachelor's degree in Computer Science with focus on software engineering and artificial intelligence.
+He completed an MSc in Business Analytics at Imperial College London (Merit) and a First-Class BSc in Computer Science at the University of Leicester. Vishal enjoys applying machine learning and statistical methods to solve real-world problems.
