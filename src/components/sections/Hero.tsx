@@ -63,7 +63,7 @@ export default function Hero() {
               className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold gradient-text bg-gradient-to-r from-primary via-accent-secondary to-primary bg-clip-text text-transparent animate-gradient-shift leading-tight"
               style={{ backgroundSize: '200% 200%' }}
             >
-              Data Scientist — ML, Analytics, Visualisations
+              Data Scientist — ML, Insights and Visualisations
             </motion.span>
           </motion.div>
 
