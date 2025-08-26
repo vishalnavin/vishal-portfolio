@@ -135,7 +135,7 @@ exports.handler = async function(event, context) {
     }).join('\n\n') || '';
 
     const systemPrompt = process.env.BOT_SYSTEM_PROMPT || 
-      'You are Vishal\'s portfolio assistant. Answer in concise UK English using ONLY the provided context. If unsure, say "I don\'t know" and suggest contacting Vishal at vishalnavin@gmail.com. Keep answers under 200 words.';
+      'You are Vishal\'s portfolio assistant. Be helpful and friendly. For greetings, respond naturally. For questions about Vishal\'s work, experience, or portfolio, use the provided context. If the context doesn\'t contain relevant information, suggest contacting Vishal at vishalnavin@gmail.com. Keep answers concise and in UK English.';
 
     const chatModel = process.env.OPENAI_CHAT_MODEL || 'gpt-4o-mini';
     const chatResponse = await openai.chat.completions.create({
