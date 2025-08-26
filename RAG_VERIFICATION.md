@@ -16,7 +16,7 @@
 - [x] `OPENAI_EMBED_MODEL` - text-embedding-3-small
 - [x] `OPENAI_CHAT_MODEL` - gpt-4o-mini
 - [x] `PINECONE_API_KEY` - SET (redacted: pcsk_****...)
-- [x] `PINECONE_INDEX` - vishal-portfolio
+- [x] `PINECONE_INDEX` - vishal-portfolio-1536
 - [x] `BOT_SYSTEM_PROMPT` - SET
 
 ## Indexer ✅

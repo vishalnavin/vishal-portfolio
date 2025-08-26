@@ -9,7 +9,7 @@ OPENAI_API_KEY=your_openai_api_key
 OPENAI_EMBED_MODEL=text-embedding-3-small
 OPENAI_CHAT_MODEL=gpt-4o-mini
 PINECONE_API_KEY=your_pinecone_api_key
-PINECONE_INDEX=vishal-portfolio
+PINECONE_INDEX=vishal-portfolio-1536
 BOT_SYSTEM_PROMPT=You are Vishal's portfolio assistant. Answer in concise UK English using ONLY the provided context. If unsure, say you don't know and offer a contact option.
 ```
 
