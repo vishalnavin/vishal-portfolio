@@ -20,7 +20,13 @@ function chunkText(text, chunkSize = 1500, overlap = 200) {
     const end = Math.min(start + chunkSize, text.length);
     const chunk = text.slice(start, end);
     chunks.push(chunk);
-    start = end - overlap;
+    // Ensure we make progress
+    const nextStart = end - overlap;
+    if (nextStart <= start) {
+      start = end;
+    } else {
+      start = nextStart;
+    }
   }
   
   return chunks;
@@ -45,6 +51,15 @@ async function buildIndex() {
     
     const index = pinecone.index(process.env.PINECONE_INDEX);
     const embedModel = process.env.OPENAI_EMBED_MODEL || 'text-embedding-3-small';
+    
+    // Test embedding dimensions first
+    console.log(`🔍 Testing embedding model: ${embedModel}`);
+    const testEmbedding = await openai.embeddings.create({
+      model: embedModel,
+      input: 'test',
+    });
+    const embeddingDimension = testEmbedding.data[0].embedding.length;
+    console.log(`📏 Embedding dimension: ${embeddingDimension}`);
     
     let totalChunks = 0;
     
@@ -96,7 +111,14 @@ async function buildIndex() {
           console.log(`   ✅ Upserted ${embeddings.length} chunks to Pinecone`);
           totalChunks += embeddings.length;
         } catch (error) {
-          console.error(`   ❌ Error upserting chunks:`, error.message);
+          if (error.message.includes('Vector dimension') && error.message.includes('does not match')) {
+            console.error(`   ❌ Dimension mismatch error: ${error.message}`);
+            console.error(`   💡 Solution: Recreate your Pinecone index with dimension ${embeddingDimension}`);
+            console.error(`   💡 Or use a different embedding model that produces 512-dimensional vectors`);
+            process.exit(1);
+          } else {
+            console.error(`   ❌ Error upserting chunks:`, error.message);
+          }
         }
       }
     }
