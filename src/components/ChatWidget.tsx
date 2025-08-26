@@ -20,6 +20,9 @@ interface ChatResponse {
     title: string;
     source: string;
   }>;
+  lowConfidence?: boolean;
+  clarifyingQuestion?: boolean;
+  apiLimit?: boolean;
 }
 
 const ChatWidget: React.FC = () => {
@@ -65,10 +68,8 @@ const ChatWidget: React.FC = () => {
     setIsLoading(true);
 
     try {
-      // Use the correct endpoint for both local and production
-      const apiUrl = process.env.NODE_ENV === 'development' 
-        ? '/.netlify/functions/chat' 
-        : '/api/chat';
+      // Use the direct function endpoint for both local and production
+      const apiUrl = '/.netlify/functions/chat';
       
       const response = await fetch(apiUrl, {
         method: 'POST',
@@ -94,6 +95,11 @@ const ChatWidget: React.FC = () => {
       // Show a special indicator if API limits are hit
       if (data.apiLimit) {
         assistantMessage.content += '\n\n⚠️ Note: This is a fallback response due to API limits.';
+      }
+
+      // Add confidence indicator for low confidence responses
+      if (data.lowConfidence && !data.clarifyingQuestion) {
+        assistantMessage.content += '\n\n💡 This answer may be incomplete — feel free to ask a follow-up question.';
       }
 
       setMessages(prev => [...prev, assistantMessage]);
@@ -172,6 +178,8 @@ const ChatWidget: React.FC = () => {
                     className={`max-w-[80%] p-3 rounded-lg ${
                       message.role === 'user'
                         ? 'bg-blue-600 text-white'
+                        : message.content.includes('Quick question:') || message.content.includes('Could you be more specific')
+                        ? 'bg-yellow-50 border border-yellow-200 text-gray-800'
                         : 'bg-gray-100 text-gray-800'
                     }`}
                   >
