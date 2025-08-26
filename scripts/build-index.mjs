@@ -11,8 +11,8 @@ const pinecone = new Pinecone({
   apiKey: process.env.PINECONE_API_KEY,
 });
 
-// Chunk text to approximately 1,500 characters with ~200 character overlap
-function chunkText(text, chunkSize = 1500, overlap = 200) {
+// Chunk text to approximately 1,000 characters with ~150 character overlap for denser recall
+function chunkText(text, chunkSize = 1000, overlap = 150) {
   const chunks = [];
   let start = 0;
   
@@ -32,10 +32,21 @@ function chunkText(text, chunkSize = 1500, overlap = 200) {
   return chunks;
 }
 
-// Extract title from markdown content
+// Extract title and section from markdown content
 function extractTitle(content) {
   const titleMatch = content.match(/^#\s+(.+)$/m);
   return titleMatch ? titleMatch[1].trim() : '';
+}
+
+// Extract section heading for a chunk
+function extractSection(content, chunkStart) {
+  // Find the last ## heading before this chunk
+  const beforeChunk = content.substring(0, chunkStart);
+  const sectionMatches = beforeChunk.match(/##\s+(.+)$/gm);
+  if (sectionMatches && sectionMatches.length > 0) {
+    return sectionMatches[sectionMatches.length - 1].replace(/^##\s+/, '').trim();
+  }
+  return '';
 }
 
 async function buildIndex() {
@@ -78,6 +89,10 @@ async function buildIndex() {
       for (let i = 0; i < chunks.length; i++) {
         const chunk = chunks[i];
         
+        // Find where this chunk starts in the original content
+        const chunkStart = content.indexOf(chunk);
+        const section = extractSection(content, chunkStart);
+        
         try {
           const embeddingResponse = await openai.embeddings.create({
             model: embedModel,
@@ -92,6 +107,7 @@ async function buildIndex() {
             metadata: {
               source: file,
               title: title,
+              section: section,
               chunk: i + 1,
               text: chunk.substring(0, 1000), // Truncate to safe size
             },
