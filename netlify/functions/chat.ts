@@ -61,11 +61,11 @@ const handler: Handler = async (event) => {
     // Build grounded prompt
     const snippets = queryResponse.matches?.map((match, idx) => {
       const metadata = match.metadata as any;
-      return `[${idx + 1}] ${metadata.text}`;
+      return `[${idx + 1}] ${metadata.title ? `(${metadata.title}) ` : ''}${metadata.text}`;
     }).join('\n\n') || '';
 
     const systemPrompt = process.env.BOT_SYSTEM_PROMPT || 
-      'You are a helpful AI assistant for a portfolio website. Answer questions based on the provided context. Always cite sources using [1], [2], etc. If you cannot answer from the context, say so.';
+      'You are a helpful AI assistant for a portfolio website. Answer questions based on the provided context only. Use concise UK English. If you cannot answer from the context, say "I don\'t know" and suggest contacting the person directly.';
 
     const chatModel = process.env.OPENAI_CHAT_MODEL || 'gpt-4o-mini';
     const chatResponse = await openai.chat.completions.create({
@@ -77,7 +77,7 @@ const handler: Handler = async (event) => {
           content: `Context:\n${snippets}\n\nQuestion: ${question}`,
         },
       ],
-      temperature: 0.7,
+      temperature: 0.2,
     });
 
     const answer = chatResponse.choices[0]?.message?.content || 'Sorry, I could not generate a response.';
@@ -91,8 +91,8 @@ const handler: Handler = async (event) => {
         source: metadata.source || 'Unknown',
       };
       
-      // Deduplicate by source
-      const exists = acc.find(s => s.source === source.source);
+      // Deduplicate by title/source
+      const exists = acc.find(s => s.title === source.title && s.source === source.source);
       if (!exists) {
         acc.push(source);
       }
