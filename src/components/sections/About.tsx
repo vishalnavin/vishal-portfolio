@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+ import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
 import { useRef } from 'react';
 import { User, Calendar, MapPin } from 'lucide-react';
@@ -35,10 +35,10 @@ export default function About() {
             <motion.div variants={itemVariants} className="lg:pr-6 order-2 lg:order-1">
               <div className="glass p-6 md:p-8 rounded-2xl h-full flex flex-col justify-center">
                 <p className="text-base md:text-lg text-foreground/90 leading-relaxed mb-4 md:mb-6">
-                  I'm a data scientist with a computer science foundation, experienced across the stack—from PySpark pipelines and feature engineering to modelling and decision-ready visuals. My focus is on building solutions that are practical, explainable, and ready to deploy.
+                  I'm a data scientist with a computer science foundation, comfortable across the stack from PySpark pipelines and feature engineering to modelling and decision ready visuals. I focus on building solutions that are practical, explainable and ready for production.
                 </p>
                 <p className="text-base md:text-lg text-foreground/90 leading-relaxed">
-                  Recent work includes churn and retention modelling, player-behaviour segmentation, and geospatial analysis to support product and strategy. Photography and travel sharpen my eye for patterns and context — the same instincts I bring to data storytelling.
+                  Recent work includes churn and retention modelling, player behaviour segmentation and geospatial analysis to inform product and strategy. I enjoy photography and travel, which sharpen my eye for patterns and context, the same instincts I bring to data storytelling.
                 </p>
               </div>
             </motion.div>

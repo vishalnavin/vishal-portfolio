@@ -84,7 +84,7 @@ export default function Hero() {
             transition={{ delay: 1 }}
             className="text-base sm:text-lg text-muted-foreground mb-8 md:mb-12 max-w-2xl mx-auto px-4"
           >
-            (MSc Business Analytics (Imperial College London)
+            Business Analytics MSc (Imperial College London)
           </motion.p>
 
           {/* CTAs */}
