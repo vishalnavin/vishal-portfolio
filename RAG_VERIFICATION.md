@@ -135,3 +135,63 @@ The RAG chatbot implementation is **functionally complete** but **blocked by a P
 - All components tested and functional locally
 
 **Final Status**: ✅ **FULLY FUNCTIONAL** - Ready for production deployment
+
+---
+
+## Pre-deployment verification (26 Aug 2025)
+
+### Pinecone Index Status ✅
+- **Index name**: `vishal-portfolio-1536`
+- **Dimension**: 1536 (matches text-embedding-3-small)
+- **Vectors stored**: 10 chunks successfully indexed
+- **Status**: ✅ Ready for production queries
+
+### Local API Test Results ✅
+- **Direct function call**: HTTP 200 ✅
+- **Answer quality**: ✅ Concise, grounded responses
+- **Sources**: ✅ Array with numbered sources [1], [2], etc.
+- **Test scenarios verified**:
+  - "What did Vishal do at Rockstar?" → ✅ Detailed response with 4 sources
+  - "Show me your projects" → ✅ Comprehensive project list with 3 sources
+  - "How can I contact you?" → ✅ Contact information with 4 sources
+  - Empty question → ✅ Proper validation error
+  - Long question → ✅ Truncated and processed correctly
+
+### UI Integration Status ✅
+- **Chat widget**: ✅ Mounted and functional
+- **API integration**: ✅ Correct endpoint calling
+- **Text visibility**: ✅ Input text properly styled (text-gray-900)
+- **Layout**: ✅ No overlap with navigation or footer
+- **Accessibility**: ✅ Basic ARIA labels and keyboard navigation
+
+### Hardening Measures Implemented ✅
+- **Input validation**: ✅ Question truncation (600 chars), type checking, empty validation
+- **Token controls**: ✅ max_tokens: 250, temperature: 0.2
+- **Rate limiting**: ✅ 20 requests/hour per IP with sliding window
+- **Retrieval optimization**: ✅ topK: 4, snippet truncation (300 chars)
+- **Fallback handling**: ✅ "I don't know" responses with contact suggestions
+- **Error handling**: ✅ Graceful API quota limit handling
+- **Logging**: ✅ Anonymised metrics (no PII, no secrets)
+
+### Security & Cost Controls ✅
+- **Input sanitization**: ✅ Question truncation prevents abuse
+- **Token limits**: ✅ 250 max tokens controls costs
+- **Rate limiting**: ✅ Prevents spam and abuse
+- **Error boundaries**: ✅ Graceful degradation on failures
+- **Minimal logging**: ✅ No sensitive data in logs
+
+### Next Steps for Deployment
+1. **Netlify Environment Variables** (Deploy Previews):
+   - `OPENAI_API_KEY` (sk-proj-****)
+   - `OPENAI_EMBED_MODEL` = text-embedding-3-small
+   - `OPENAI_CHAT_MODEL` = gpt-4o-mini
+   - `PINECONE_API_KEY` (pcsk_****)
+   - `PINECONE_INDEX` = vishal-portfolio-1536
+   - `BOT_SYSTEM_PROMPT` = "You are Vishal's portfolio assistant..."
+
+2. **Push branch** to trigger Deploy Preview
+3. **Test Preview** with same three questions
+4. **Copy env vars** to Production scope
+5. **Merge PR** to deploy to production
+
+**Deployment Status**: ✅ **READY FOR DEPLOY PREVIEW**
