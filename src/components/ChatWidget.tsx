@@ -108,6 +108,7 @@ const ChatWidget: React.FC = () => {
         className="fixed bottom-6 right-6 z-50 bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-full shadow-lg transition-colors"
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
+        aria-label="Open chat assistant"
       >
         <MessageCircle size={24} />
       </motion.button>
@@ -130,9 +131,17 @@ const ChatWidget: React.FC = () => {
               <button
                 onClick={() => setIsOpen(false)}
                 className="text-gray-500 hover:text-gray-700"
+                aria-label="Close chat"
               >
                 <X size={20} />
               </button>
+            </div>
+
+            {/* Disclaimer */}
+            <div className="px-4 py-2 bg-gray-50 border-b border-gray-200">
+              <p className="text-xs text-gray-500 text-center">
+                Answers may be inaccurate; grounded on my portfolio
+              </p>
             </div>
 
             {/* Messages */}
@@ -159,14 +168,13 @@ const ChatWidget: React.FC = () => {
                     <p className="text-sm whitespace-pre-wrap">{message.content}</p>
                     {message.sources && message.sources.length > 0 && (
                       <div className="mt-2 pt-2 border-t border-gray-200">
-                        <p className="text-xs text-gray-500 mb-1">Sources:</p>
                         <div className="flex flex-wrap gap-1">
                           {message.sources.map((source) => (
                             <span
                               key={source.idx}
                               className="inline-block px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded"
                             >
-                              {source.title}
+                              [{source.idx}] {source.title}
                             </span>
                           ))}
                         </div>
@@ -195,13 +203,6 @@ const ChatWidget: React.FC = () => {
                 </div>
               )}
               <div ref={messagesEndRef} />
-            </div>
-
-            {/* Disclaimer */}
-            <div className="px-4 py-2 bg-gray-50 border-t border-gray-200">
-              <p className="text-xs text-gray-500 text-center">
-                AI responses are based on available portfolio data
-              </p>
             </div>
 
             {/* Input */}
