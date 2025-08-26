@@ -1,14 +1,6 @@
 const OpenAI = require('openai');
 const { Pinecone } = require('@pinecone-database/pinecone');
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
-
-const pinecone = new Pinecone({
-  apiKey: process.env.PINECONE_API_KEY,
-});
-
 // Simple in-memory rate limiting (suitable for Netlify Functions)
 const rateLimitMap = new Map();
 const RATE_LIMIT_WINDOW = 60 * 60 * 1000; // 1 hour
@@ -89,6 +81,16 @@ exports.handler = async function(event, context) {
         body: JSON.stringify({ error: 'Question cannot be empty' }),
       };
     }
+
+    // Initialize OpenAI
+    const openai = new OpenAI({
+      apiKey: process.env.OPENAI_API_KEY,
+    });
+
+    // Initialize Pinecone
+    const pinecone = new Pinecone({
+      apiKey: process.env.PINECONE_API_KEY,
+    });
 
     // Embed the question
     const embedModel = process.env.OPENAI_EMBED_MODEL || 'text-embedding-3-small';
