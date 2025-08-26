@@ -11,7 +11,7 @@ const pinecone = new Pinecone({
   apiKey: process.env.PINECONE_API_KEY,
 });
 
-// Chunk text into ~1500 character chunks with ~200 character overlap
+// Chunk text to approximately 1,500 characters with ~200 character overlap
 function chunkText(text, chunkSize = 1500, overlap = 200) {
   const chunks = [];
   let start = 0;
@@ -26,16 +26,10 @@ function chunkText(text, chunkSize = 1500, overlap = 200) {
   return chunks;
 }
 
-// Clean markdown text
-function cleanMarkdown(text) {
-  return text
-    .replace(/^#+\s+/gm, '') // Remove headers
-    .replace(/\*\*(.*?)\*\*/g, '$1') // Remove bold
-    .replace(/\*(.*?)\*/g, '$1') // Remove italic
-    .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1') // Remove links
-    .replace(/`([^`]+)`/g, '$1') // Remove inline code
-    .replace(/\n{3,}/g, '\n\n') // Normalize line breaks
-    .trim();
+// Extract title from markdown content
+function extractTitle(content) {
+  const titleMatch = content.match(/^#\s+(.+)$/m);
+  return titleMatch ? titleMatch[1].trim() : '';
 }
 
 async function buildIndex() {
@@ -59,8 +53,8 @@ async function buildIndex() {
       
       const filePath = join(dataDir, file);
       const content = readFileSync(filePath, 'utf-8');
-      const cleanedContent = cleanMarkdown(content);
-      const chunks = chunkText(cleanedContent);
+      const title = extractTitle(content) || file.replace(/\.(md|txt)$/, '');
+      const chunks = chunkText(content);
       
       console.log(`   Split into ${chunks.length} chunks`);
       
@@ -82,9 +76,9 @@ async function buildIndex() {
             values: embedding,
             metadata: {
               source: file,
-              title: file.replace(/\.(md|txt)$/, ''),
+              title: title,
               chunk: i + 1,
-              text: chunk,
+              text: chunk.substring(0, 1000), // Truncate to safe size
             },
           });
           
@@ -107,7 +101,7 @@ async function buildIndex() {
       }
     }
     
-    console.log(`🎉 Index build complete! Total chunks: ${totalChunks}`);
+    console.log(`🎉 Indexing complete! Total chunks: ${totalChunks}`);
     
   } catch (error) {
     console.error('❌ Index build failed:', error);
