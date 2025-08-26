@@ -184,7 +184,7 @@ export default function Contact() {
                 <h3 className="text-2xl font-bold mb-6">Let's Connect</h3>
                 <p className="text-lg text-muted-foreground mb-8">
                   I'm always interested in new opportunities and challenging data problems. 
-                  Whether you have a project in mind or just want to chat about data science, 
+                  Whether you have a project in mind or just want to chat, 
                   feel free to reach out.
                 </p>
               </div>
