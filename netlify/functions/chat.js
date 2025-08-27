@@ -10,7 +10,7 @@ const RATE_LIMIT_MAX = 20; // 20 requests per hour
 const RAG_TOPK_BASE = parseInt(process.env.RAG_TOPK_BASE) || 6;
 const RAG_TOPK_FINAL = parseInt(process.env.RAG_TOPK_FINAL) || 5;
 const RAG_MMR_LAMBDA = parseFloat(process.env.RAG_MMR_LAMBDA) || 0.7;
-const RAG_SCORE_THRESHOLD = parseFloat(process.env.RAG_SCORE_THRESHOLD) || 0.58;
+const RAG_SCORE_THRESHOLD = parseFloat(process.env.RAG_SCORE_THRESHOLD) || 0.35;
 
 function checkRateLimit(clientIP) {
   const now = Date.now();
