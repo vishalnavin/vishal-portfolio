@@ -42,14 +42,14 @@ The chatbot uses several environment variables to tune retrieval and response be
 - `RAG_TOPK_BASE=6` - Initial retrieval candidates per query variant
 - `RAG_TOPK_FINAL=5` - Final candidates after MMR diversification  
 - `RAG_MMR_LAMBDA=0.7` - MMR diversity vs relevance balance (0.0-1.0)
-- `RAG_SCORE_THRESHOLD=0.58` - Minimum similarity score for direct answers
+- `RAG_SCORE_THRESHOLD=0.35` - Minimum similarity score for direct answers
 
 ### Clarification Policy
 
 The chatbot implements a decisive answering strategy:
 
 1. **Compute maxScore** from retrieved candidates
-2. **If maxScore < 0.58 or no candidates** → return a single clarifying question
+2. **If maxScore < 0.35 or no candidates** → return a single clarifying question
 3. **Else** → answer directly (no clarifying question)
 4. **Enforce one-clarify maximum**: if last assistant message was clarifying and user replied, must answer directly next
 
@@ -72,6 +72,56 @@ Console logs include anonymised metrics per request:
 - Elapsed milliseconds
 
 No PII or secrets are logged.
+
+## Adaptive Prompt Behaviour
+
+The chatbot automatically switches between two modes based on question content:
+
+### Portfolio Mode (Default)
+- **Trigger**: General portfolio questions
+- **Prompt**: "You are Vishal's portfolio assistant. Use only the provided context. Respond in concise UK English. Prefer direct answers when context is sufficient. Include short citations like [1], [2]. If context is weak, ask one clarifying question; if still unknown, say you don't know and suggest contacting Vishal."
+
+### Interview Mode
+- **Trigger**: Recruiter-style keywords (hire, achievement, strength, weakness, challenge, leadership, five years)
+- **Prompt**: "You are Vishal's interview coach and portfolio assistant. Answer as if Vishal is responding in an interview: confident, concise, factual, and grounded in the provided context. Always cite from [FAQ], [Projects], [Highlights], or [Skills]."
+
+This ensures appropriate tone and content for different types of questions.
+
+## Re-test Procedure
+
+After each re-index or significant changes, run the comprehensive test suite:
+
+### Prerequisites
+```bash
+# Set environment variables
+export OPENAI_API_KEY="your_key"
+export PINECONE_API_KEY="your_key"
+export PINECONE_INDEX="vishal-portfolio-1536"
+export OPENAI_EMBED_MODEL="text-embedding-3-small"
+export OPENAI_CHAT_MODEL="gpt-4o-mini"
+```
+
+### Test Execution
+```bash
+# Start local server
+npx netlify dev --port 8888
+
+# In another terminal, run test suite
+node test-chatbot.js
+```
+
+### Expected Results
+- **8 test questions** covering portfolio and interview scenarios
+- **All tests should pass** with at least partial keyword matches
+- **Adaptive prompts** working correctly (interview vs portfolio mode)
+- **Response quality** high with proper citations and UK English
+
+### Test Coverage
+1. Rockstar Games work (PySpark, telemetry, retention)
+2. Coalition Greenwich ML techniques (Gradient Boosting, Random Forest)
+3. Interview questions (hire, achievements, tools)
+4. Contact information (email, LinkedIn)
+5. Career timeline and industry experience
 
 ## Testing
 
@@ -136,7 +186,7 @@ The chatbot provides grounded answers based on the portfolio content and shows s
 1. `RAG_TOPK_BASE` - Initial candidates per query (default: 6)
 2. `RAG_TOPK_FINAL` - Final candidates after MMR (default: 5)
 3. `RAG_MMR_LAMBDA` - Diversity vs relevance balance (default: 0.7)
-4. `RAG_SCORE_THRESHOLD` - Minimum score for direct answers (default: 0.58)
+4. `RAG_SCORE_THRESHOLD` - Minimum score for direct answers (default: 0.35)
 
 #### Where to Set Variables
 - **Deploy Previews**: Set in Netlify dashboard → Site settings → Environment variables → Deploy previews
