@@ -184,20 +184,7 @@ const ChatWidget: React.FC = () => {
                     }`}
                   >
                     <p className="text-sm whitespace-pre-wrap">{message.content}</p>
-                    {message.sources && message.sources.length > 0 && (
-                      <div className="mt-2 pt-2 border-t border-gray-200">
-                        <div className="flex flex-wrap gap-1">
-                          {message.sources.map((source) => (
-                            <span
-                              key={source.idx}
-                              className="inline-block px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded"
-                            >
-                              [{source.idx}] {source.title}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                    )}
+                    {/* Sources display removed - showing clean responses only */}
                   </div>
                   {message.role === 'user' && (
                     <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">

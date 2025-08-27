@@ -321,10 +321,10 @@ exports.handler = async function(event, context) {
     let systemPrompt;
     if (isInterviewQuestion) {
       systemPrompt = process.env.BOT_SYSTEM_PROMPT || 
-        'You are Vishal\'s interview coach and portfolio assistant. Answer as if Vishal is responding in an interview: confident, concise, factual, and grounded in the provided context. Always cite from [FAQ], [Projects], [Highlights], or [Skills].';
+        'You are Vishal\'s interview coach and portfolio assistant. Answer as if Vishal is responding in an interview: confident, concise, factual, and grounded in the provided context. Do not include any citations or references in your response.';
     } else {
       systemPrompt = process.env.BOT_SYSTEM_PROMPT || 
-        'You are Vishal\'s portfolio assistant. Use only the provided context. Respond in concise UK English. Prefer direct answers when context is sufficient. Include short citations like [1], [2]. If context is weak, ask one clarifying question; if still unknown, say you don\'t know and suggest contacting Vishal.';
+        'You are Vishal\'s portfolio assistant. Use only the provided context. Respond in concise UK English. Prefer direct answers when context is sufficient. Do not include any citations, references, or numbered sources in your response. If context is weak, ask one clarifying question; if still unknown, say you don\'t know and suggest contacting Vishal.';
     }
 
     // Handle low confidence with clarifying questions
@@ -401,7 +401,7 @@ Generate one clarifying question (max 100 words):`;
 
     const response = {
       answer,
-      sources,
+      sources: [], // Empty sources array to avoid displaying references
       lowConfidence: shouldClarify,
     };
 
