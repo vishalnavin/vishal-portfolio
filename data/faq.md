@@ -1,25 +1,43 @@
-# FAQ
+# Frequently Asked Questions
 
-**Q: How can I contact Vishal?**  
-A: You can reach Vishal via the contact form on his website or by email at vishalnavin@gmail.com. He's based in London and typically responds within 24 hours.
+**What tools do you use?**  
+Python, PySpark, Databricks, scikit-learn, PowerBI, Tableau, SQL.
 
-**Q: What tools and technologies does he use most?**  
-A: PySpark, Python, SQL, scikit-learn, Databricks, Git, and Tableau. He also has experience with machine learning pipelines, data visualisation, and cloud platforms.
+**What projects have you done?**  
+- Rockstar Games: telemetry analysis, clustering, retention modelling.  
+- Coalition Greenwich: revenue forecasting for banks.  
+- MSc projects at Imperial: optimisation, text analytics, supply chain.
 
-**Q: Is Vishal open to work?**  
-A: Yes — he is open to opportunities in data science, analytics consulting, and related fields. He's particularly interested in roles involving machine learning, predictive modelling, and data-driven insights.
+**Where are you based?**  
+London, United Kingdom.
 
-**Q: What is his educational background?**  
-A: MSc in Business Analytics (Imperial College London, Merit) and a First-Class BSc in Computer Science (University of Leicester). His coursework covered ML, optimisation, statistics, causal modelling, and text analytics.
+**How can I contact you?**  
+Email: vishalnavin@gmail.com.
 
-**Q: What are his key achievements at Rockstar Games?**  
-A: Developed sequential models of GTA Online player behaviour using PySpark and Databricks, created retention labels (acquired, retained, resurrected, churned), and performed clustering analysis to explore player segments and churn patterns.
+**What value can you add?**  
+Turning messy data into actionable insights — bridging ML techniques with business strategy.
 
-**Q: What did he accomplish at Coalition Greenwich?**  
-A: Built revenue prediction models for banking clients using Random Forest and Gradient Boosting, applied feature engineering techniques, and delivered actionable insights to stakeholders in the financial sector.
+**What industries have you worked in?**  
+Gaming, financial services, retail/wholesale (Pricerite Wholesalers).
 
-**Q: What timezone is he in and when is he available?**  
-A: Vishal is based in London (GMT/BST timezone). He's available for remote work and can accommodate different timezones for meetings and collaboration.
+**What's your availability?**  
+Open to roles in Data Science, Analytics, or Consulting — full-time from 2025.
 
-**Q: What types of projects is he interested in?**  
-A: Data science projects involving predictive modelling, customer analytics, business intelligence, and machine learning applications. He enjoys working with large datasets and translating complex analyses into actionable business insights.
+---
+
+# Recruiter-Style Q&A
+
+**Why should we hire you?**  
+Because I combine strong technical expertise (PySpark, ML, SQL, Tableau) with the ability to explain results to non-technical stakeholders. My work at Rockstar and Coalition shows I can bridge analytics with decision-making.
+
+**What's your biggest achievement?**  
+At Rockstar Games, I helped design a clustering pipeline on millions of player records that revealed new churn drivers — insights that shaped engagement strategies.
+
+**How do you handle challenges?**  
+By breaking them into structured steps. For example, when facing incomplete telemetry data, I used feature engineering and clustering to still surface actionable insights.
+
+**What's your leadership style?**  
+Collaborative. In group consulting projects, I coordinated tasks, ensured consistent data quality, and kept the team aligned on deliverables.
+
+**Where do you see yourself in five years?**  
+As a data scientist/analytics consultant leading projects that merge machine learning with business outcomes, ideally in gaming or finance.

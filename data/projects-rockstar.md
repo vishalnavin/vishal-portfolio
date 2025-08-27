@@ -1,17 +1,9 @@
-# Rockstar Games Internship
+# Projects — Rockstar Games
 
-Vishal joined Rockstar Games in London as a Data Science Intern, working on GTA Online telemetry. He developed a sequential model of daily player activities using economy transactions, spawn events, and flow data, with a focus on Freemode interactions.  
-
-He created retention labels (acquired, retained, resurrected, churned) and integrated them into clustering analysis. Using PySpark, Databricks, and KMeans, he explored cluster–retention relationships, churn patterns, and spatial behaviour across player segments.
-
-## Key Achievements
-- **Player Behaviour Modelling**: Built sequential models analysing daily GTA Online player activities using PySpark and Databricks
-- **Retention Analysis**: Developed comprehensive retention labelling system (acquired, retained, resurrected, churned) for player lifecycle analysis
-- **Clustering & Segmentation**: Applied KMeans clustering to identify distinct player segments and their retention patterns
-- **Spatial Analysis**: Investigated player spatial behaviour and movement patterns across different game modes
-- **Tools Used**: PySpark, Databricks, Python, scikit-learn, SQL, data visualisation
-
-## Impact
-- Improved understanding of player engagement patterns and churn drivers
-- Enhanced player segmentation for targeted interventions and retention strategies
-- Provided actionable insights for game design and player experience optimisation
+- Analysed GTA Online telemetry (~100M+ rows) using **PySpark** pipelines in **Databricks**.  
+- Built a **retention model** labelling players as acquired, retained, churned, or resurrected.  
+- Engineered player features and ran **KMeans clustering** to group player behaviours.  
+- Developed sequential models of daily activity flows (spawn, economy, Freemode interactions).  
+- Conducted **spatial analysis** of player movement in high-traffic areas.  
+- Investigated churn patterns and transitions between clusters over time.  
+- Outcomes: improved understanding of player engagement and retention drivers, informing game design decisions.

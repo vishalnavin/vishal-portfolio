@@ -1,16 +1,8 @@
-# Curriculum Vitae
+# Skills Overview
 
-## Education
-- **MSc Business Analytics** (Imperial College London, 2024) — Merit.  
-- **BSc Computer Science** (University of Leicester, 2022) — First-Class Honours.
-
-## Skills
-- **Languages:** Python, SQL, R, JavaScript.  
+- **Programming:** Python, SQL, R, JavaScript.  
 - **Machine Learning & Analytics:** Regression, Classification, Clustering (KMeans), Gradient Boosting, Random Forest, Causal Modelling.  
 - **Data Engineering:** PySpark pipelines, Databricks, feature engineering, data cleaning.  
 - **Optimisation & Forecasting:** AMPL, ARIMA, supply chain optimisation.  
 - **Visualisation & BI:** Matplotlib, PowerBI, Tableau.  
 - **Other Tools:** Git, Netlify, GitHub, scikit-learn.
-
-## Experience
-See project files: Rockstar Games internship, Coalition Greenwich consulting project.

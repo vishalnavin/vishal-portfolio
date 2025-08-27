@@ -10,7 +10,7 @@ const RATE_LIMIT_MAX = 20; // 20 requests per hour
 const RAG_TOPK_BASE = parseInt(process.env.RAG_TOPK_BASE) || 6;
 const RAG_TOPK_FINAL = parseInt(process.env.RAG_TOPK_FINAL) || 5;
 const RAG_MMR_LAMBDA = parseFloat(process.env.RAG_MMR_LAMBDA) || 0.7;
-const RAG_SCORE_THRESHOLD = parseFloat(process.env.RAG_SCORE_THRESHOLD) || 0.5;
+const RAG_SCORE_THRESHOLD = parseFloat(process.env.RAG_SCORE_THRESHOLD) || 0.35;
 
 function checkRateLimit(clientIP) {
   const now = Date.now();
@@ -192,8 +192,8 @@ exports.handler = async function(event, context) {
       };
     }
     
-    // Truncate question to prevent abuse
-    const truncatedQuestion = question.trim().substring(0, 600);
+    // Truncate question to prevent abuse (800 chars as specified)
+    const truncatedQuestion = question.trim().substring(0, 800);
     if (truncatedQuestion.length !== question.trim().length) {
       console.log(`[${new Date().toISOString()}] Question truncated from ${question.length} to ${truncatedQuestion.length} chars`);
     }
@@ -204,6 +204,10 @@ exports.handler = async function(event, context) {
         body: JSON.stringify({ error: 'Question cannot be empty' }),
       };
     }
+
+    // Check if this is a follow-up to a clarifying question
+    const requestBody = JSON.parse(event.body || '{}');
+    const isFollowUpToClarification = requestBody.isFollowUpToClarification || false;
 
     // Initialize OpenAI
     const openai = new OpenAI({
@@ -269,11 +273,15 @@ exports.handler = async function(event, context) {
     const diverseCandidates = mmrDiversify(allMatches);
     console.log(`[${new Date().toISOString()}] After MMR: ${diverseCandidates.length} diverse candidates`);
     
-    // 6. Score threshold check
+    // 6. Score threshold check and clarification policy
     const maxScore = diverseCandidates.length > 0 ? Math.max(...diverseCandidates.map(c => c.score)) : 0;
-    const lowConfidence = maxScore < RAG_SCORE_THRESHOLD;
+    const candidateCount = diverseCandidates.length;
     
-    console.log(`[${new Date().toISOString()}] Max score: ${maxScore.toFixed(3)}, threshold: ${RAG_SCORE_THRESHOLD}, low confidence: ${lowConfidence}`);
+    // Clarification policy: if maxScore < 0.58 or no candidates, return clarifying question
+    // But enforce one-clarify maximum: if last assistant message was clarifying and user replied, must answer directly next
+    const shouldClarify = (maxScore < RAG_SCORE_THRESHOLD || candidateCount === 0) && !isFollowUpToClarification;
+    
+    console.log(`[${new Date().toISOString()}] Max score: ${maxScore.toFixed(3)}, threshold: ${RAG_SCORE_THRESHOLD}, candidates: ${candidateCount}, should clarify: ${shouldClarify}, is follow-up: ${isFollowUpToClarification}`);
     
     // 7. Lightweight re-ranking
     const finalCandidates = await rerankCandidates(openai, truncatedQuestion, diverseCandidates);
@@ -304,12 +312,23 @@ exports.handler = async function(event, context) {
       return `[${idx + 1}] ${metadata.title ? `(${metadata.title}) ` : ''}${text}`;
     }).join('\n\n');
 
-    // Phase 3: Improved System Prompt
-    const systemPrompt = process.env.BOT_SYSTEM_PROMPT || 
-      'You are Vishal\'s portfolio assistant. Use only the provided context. Respond in concise UK English. Prefer specifics (roles, tools, outcomes). Include short citations like [1], [2]. If the context is weak, ask a brief clarifying question first. If still unknown after clarification, say you don\'t know and suggest contacting Vishal.';
+    // Phase 3: Adaptive System Prompt
+    const recruiterKeywords = ['hire', 'achievement', 'strength', 'weakness', 'challenge', 'leadership', 'five years'];
+    const isInterviewQuestion = recruiterKeywords.some(keyword => 
+      truncatedQuestion.toLowerCase().includes(keyword)
+    );
+    
+    let systemPrompt;
+    if (isInterviewQuestion) {
+      systemPrompt = process.env.BOT_SYSTEM_PROMPT || 
+        'You are Vishal\'s interview coach and portfolio assistant. Answer as if Vishal is responding in an interview: confident, concise, factual, and grounded in the provided context. Always cite from [FAQ], [Projects], [Highlights], or [Skills].';
+    } else {
+      systemPrompt = process.env.BOT_SYSTEM_PROMPT || 
+        'You are Vishal\'s portfolio assistant. Use only the provided context. Respond in concise UK English. Prefer direct answers when context is sufficient. Include short citations like [1], [2]. If context is weak, ask one clarifying question; if still unknown, say you don\'t know and suggest contacting Vishal.';
+    }
 
     // Handle low confidence with clarifying questions
-    if (lowConfidence) {
+    if (shouldClarify) {
       const clarifyingPrompt = `Given this context, generate a single short clarifying question to help understand what the user is asking about:
 
 Context:
@@ -358,7 +377,7 @@ Generate one clarifying question (max 100 words):`;
         },
       ],
       temperature: 0.2,
-      max_tokens: 250, // Explicit token limit
+      max_tokens: 220, // Explicit token limit as specified
     });
 
     const answer = chatResponse.choices[0]?.message?.content || 'Sorry, I could not generate a response.';
@@ -383,12 +402,12 @@ Generate one clarifying question (max 100 words):`;
     const response = {
       answer,
       sources,
-      lowConfidence,
+      lowConfidence: shouldClarify,
     };
 
-    // Log success metrics (anonymised)
+    // Log success metrics (anonymised) with diagnostics
     const duration = Date.now() - startTime;
-    console.log(`[${new Date().toISOString()}] Success - Q: ${truncatedQuestion.length} chars, A: ${answer.length} chars, Sources: ${sources.length}, Duration: ${duration}ms, Low confidence: ${lowConfidence}`);
+    console.log(`[${new Date().toISOString()}] Success - Q: ${truncatedQuestion.length} chars, maxScore: ${maxScore.toFixed(3)}, candidates: ${candidateCount}/${finalCandidates.length} pre/post MMR, lowConfidence: ${shouldClarify}, interviewMode: ${isInterviewQuestion}, duration: ${duration}ms`);
 
     return {
       statusCode: 200,
