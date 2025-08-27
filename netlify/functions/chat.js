@@ -312,9 +312,20 @@ exports.handler = async function(event, context) {
       return `[${idx + 1}] ${metadata.title ? `(${metadata.title}) ` : ''}${text}`;
     }).join('\n\n');
 
-    // Phase 3: Improved System Prompt
-    const systemPrompt = process.env.BOT_SYSTEM_PROMPT || 
-      'Use only the provided context. Respond in concise UK English. Prefer direct answers when context is sufficient. Include short citations like [1], [2]. Ask one brief clarifying question only if confidence is low. If still unknown, say you don\'t know and suggest contacting Vishal.';
+    // Phase 3: Adaptive System Prompt
+    const recruiterKeywords = ['hire', 'achievement', 'strength', 'weakness', 'challenge', 'leadership', 'five years'];
+    const isInterviewQuestion = recruiterKeywords.some(keyword => 
+      truncatedQuestion.toLowerCase().includes(keyword)
+    );
+    
+    let systemPrompt;
+    if (isInterviewQuestion) {
+      systemPrompt = process.env.BOT_SYSTEM_PROMPT || 
+        'You are Vishal\'s interview coach and portfolio assistant. Answer as if Vishal is responding in an interview: confident, concise, factual, and grounded in the provided context. Always cite from [FAQ], [Projects], [Highlights], or [Skills].';
+    } else {
+      systemPrompt = process.env.BOT_SYSTEM_PROMPT || 
+        'You are Vishal\'s portfolio assistant. Use only the provided context. Respond in concise UK English. Prefer direct answers when context is sufficient. Include short citations like [1], [2]. If context is weak, ask one clarifying question; if still unknown, say you don\'t know and suggest contacting Vishal.';
+    }
 
     // Handle low confidence with clarifying questions
     if (shouldClarify) {
@@ -396,7 +407,7 @@ Generate one clarifying question (max 100 words):`;
 
     // Log success metrics (anonymised) with diagnostics
     const duration = Date.now() - startTime;
-    console.log(`[${new Date().toISOString()}] Success - Q: ${truncatedQuestion.length} chars, maxScore: ${maxScore.toFixed(3)}, candidates: ${candidateCount}/${finalCandidates.length} pre/post MMR, lowConfidence: ${shouldClarify}, duration: ${duration}ms`);
+    console.log(`[${new Date().toISOString()}] Success - Q: ${truncatedQuestion.length} chars, maxScore: ${maxScore.toFixed(3)}, candidates: ${candidateCount}/${finalCandidates.length} pre/post MMR, lowConfidence: ${shouldClarify}, interviewMode: ${isInterviewQuestion}, duration: ${duration}ms`);
 
     return {
       statusCode: 200,
