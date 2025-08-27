@@ -33,6 +33,46 @@ Environment variables are set in Netlify deploy previews, not in production. The
 - `PINECONE_INDEX`
 - `BOT_SYSTEM_PROMPT` (optional, has sensible default)
 
+## Tuning Behaviour
+
+### Retrieval Configuration Knobs
+
+The chatbot uses several environment variables to tune retrieval and response behaviour:
+
+- `RAG_TOPK_BASE=6` - Initial retrieval candidates per query variant
+- `RAG_TOPK_FINAL=5` - Final candidates after MMR diversification  
+- `RAG_MMR_LAMBDA=0.7` - MMR diversity vs relevance balance (0.0-1.0)
+- `RAG_SCORE_THRESHOLD=0.58` - Minimum similarity score for direct answers
+
+### Clarification Policy
+
+The chatbot implements a decisive answering strategy:
+
+1. **Compute maxScore** from retrieved candidates
+2. **If maxScore < 0.58 or no candidates** → return a single clarifying question
+3. **Else** → answer directly (no clarifying question)
+4. **Enforce one-clarify maximum**: if last assistant message was clarifying and user replied, must answer directly next
+
+This prevents unnecessary back-and-forth while ensuring quality responses when confidence is sufficient.
+
+### Response Controls
+
+- **Temperature**: 0.2 for consistent, factual responses
+- **Max tokens**: ~220 to keep answers concise
+- **Input truncation**: 800 characters to prevent abuse
+- **Citations**: Short format [1], [2] from provided context only
+
+### Diagnostics
+
+Console logs include anonymised metrics per request:
+- Question length
+- MaxScore and threshold comparison
+- Candidate count pre/post MMR
+- Low confidence trigger status
+- Elapsed milliseconds
+
+No PII or secrets are logged.
+
 ## Testing
 
 Suggested test prompts:
@@ -92,6 +132,12 @@ The chatbot provides grounded answers based on the portfolio content and shows s
 5. `PINECONE_INDEX` - Index name (vishal-portfolio-1536)
 6. `BOT_SYSTEM_PROMPT` - System prompt for the chatbot
 
+#### Retrieval Tuning Variables (optional)
+1. `RAG_TOPK_BASE` - Initial candidates per query (default: 6)
+2. `RAG_TOPK_FINAL` - Final candidates after MMR (default: 5)
+3. `RAG_MMR_LAMBDA` - Diversity vs relevance balance (default: 0.7)
+4. `RAG_SCORE_THRESHOLD` - Minimum score for direct answers (default: 0.58)
+
 #### Where to Set Variables
 - **Deploy Previews**: Set in Netlify dashboard → Site settings → Environment variables → Deploy previews
 - **Production**: Set in Netlify dashboard → Site settings → Environment variables → Production
@@ -131,9 +177,9 @@ export PINECONE_INDEX="vishal-portfolio-1536"
 
 #### Current Limits
 - **Rate limiting**: 20 requests/hour per IP
-- **Token limit**: 250 max tokens per response
-- **Input truncation**: 600 characters max
-- **Retrieval**: topK=4 chunks per query
+- **Token limit**: 220 max tokens per response
+- **Input truncation**: 800 characters max
+- **Retrieval**: topK=6 base, topK=5 final chunks per query
 
 #### Monitoring
 - Check Netlify function logs for performance metrics
@@ -143,5 +189,5 @@ export PINECONE_INDEX="vishal-portfolio-1536"
 #### Cost Control
 - Token limits prevent runaway costs
 - Rate limiting prevents abuse
-- Efficient retrieval (topK=4) reduces embedding costs
+- Efficient retrieval (topK=6→5) reduces embedding costs
 - Graceful fallbacks prevent unnecessary API calls
