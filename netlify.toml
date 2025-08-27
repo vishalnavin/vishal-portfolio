@@ -1,6 +1,6 @@
 [build]
-  command = "npm run build"
   publish = "dist"
+  command = "npm run build"
 
 [functions]
   directory = "netlify/functions"
@@ -8,7 +8,17 @@
   external_node_modules = ["openai", "@pinecone-database/pinecone"]
   included_files = ["netlify/functions/*.js"]
 
+# Enable Netlify Analytics
+[analytics]
+  enabled = true
+
+# Redirects for SPA
 [[redirects]]
   from = "/api/chat"
   to = "/.netlify/functions/chat"
+  status = 200
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
   status = 200
