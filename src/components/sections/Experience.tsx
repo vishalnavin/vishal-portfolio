@@ -6,6 +6,18 @@ import { containerVariants, slideVariants } from '@/components/common/AnimationV
 
 const experiences = [
   {
+    title: 'Data Analyst & Engineer',
+    company: 'Accuria Ltd.',
+    location: 'London',
+    period: 'Nov 2025 – Present',
+    description: [
+      'Maintain and automate ETL and data processing pipelines for credit portfolio and securitisation datasets.',
+      'Support AI-based data mapping and extraction from structured and unstructured sources (Excel/PDF).',
+      'Refine YAML/JSON templates for automated data quality checks and parsing.',
+      'Collaborate with stakeholders on complex credit data, valuation algorithms, and reporting needs.'
+    ]
+  },
+  {
     title: 'Data Scientist Intern',
     company: 'Rockstar Games',
     location: 'London',
