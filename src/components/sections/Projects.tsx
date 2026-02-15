@@ -64,15 +64,6 @@ const projects: Project[] = [
     featured: true
   },
   {
-    id: 'portfolio-website',
-    title: 'Portfolio Website',
-    description: 'React/Tailwind site showcasing projects and articles.',
-    image: '/project-6.png',
-    repoUrl: 'https://github.com/vishalnavin/portfolio-website',
-    tech: ['React', 'TypeScript', 'Tailwind'],
-    featured: true
-  },
-  {
     id: 'breakfast-at-the-frat',
     title: 'Breakfast at the Frat',
     description: 'Playful visualisation of breakfast trends and habits.',
