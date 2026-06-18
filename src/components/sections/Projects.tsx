@@ -39,7 +39,7 @@ const projects: Project[] = [
     id: 'cfpb-complaint-analysis',
     title: 'CFPB Complaint Analysis',
     description: 'NLP on complaints to surface drivers and forecast severity.',
-    image: '/project-3.png',
+    image: '/project-4.png',
     repoUrl: 'https://github.com/vishalnavin/cfpb-complaint-analysis',
     tech: ['Python', 'NLP', 'Machine Learning'],
     featured: true
@@ -48,7 +48,7 @@ const projects: Project[] = [
     id: 'heatsmart-orkney',
     title: 'HeatSmart Orkney',
     description: 'Modelled home-heating scenarios and policy impact.',
-    image: '/project-4.png',
+    image: '/project-7.png',
     repoUrl: 'https://github.com/vishalnavin/heatsmart-orkney',
     tech: ['Python', 'Geospatial', 'Modelling'],
     featured: true
@@ -57,7 +57,7 @@ const projects: Project[] = [
     id: 'breakfast-at-the-frat',
     title: 'Breakfast at the Frat',
     description: 'Playful visualisation of breakfast trends and habits.',
-    image: '/project-7.png',
+    image: '/project-3.png',
     repoUrl: 'https://github.com/vishalnavin/breakfast-at-the-frat',
     tech: ['Python', 'Visualisation', 'Data Analysis'],
     featured: false
