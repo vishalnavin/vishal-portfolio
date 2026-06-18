@@ -94,7 +94,7 @@ export default function Projects() {
               <span className="gradient-text">Projects</span>
             </h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-8">
-              Data science projects showcasing ML, analytics, and visualisation skills
+              Things I've built along the way
             </p>
           </motion.div>
 
