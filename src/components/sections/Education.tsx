@@ -6,16 +6,16 @@ import { containerVariants, itemVariants } from '@/components/common/AnimationVa
 
 const education = [
   {
-    degree: 'Business Analytics',
-    degreeType: 'MSc',
-    institution: 'Imperial College London, UK',
-    period: 'Aug 2023 – Aug 2024'
-  },
-  {
     degree: 'Computer Science',
     degreeType: 'BSc',
     institution: 'University of Leicester, UK',
     period: '2019 – 2022'
+  },
+  {
+    degree: 'Business Analytics',
+    degreeType: 'MSc',
+    institution: 'Imperial College London, UK',
+    period: 'Aug 2023 – Aug 2024'
   }
 ];
 
