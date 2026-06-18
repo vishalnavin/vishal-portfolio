@@ -1,8 +1,7 @@
-import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
 import { useRef } from 'react';
-import { ExternalLink, Github, ChevronDown, ChevronUp } from 'lucide-react';
+import { ExternalLink, Github } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { containerVariants, itemVariants } from '@/components/common/AnimationVariants';
 
@@ -75,23 +74,10 @@ const projects: Project[] = [
 ];
 
 export default function Projects() {
-  const [showAllProjects, setShowAllProjects] = useState(false);
-
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
-  const featuredProjects = projects.filter(p => p.featured);
-  const displayedProjects = showAllProjects ? projects : featuredProjects;
-
-  const handleShowMore = () => {
-    setShowAllProjects(true);
-  };
-
-  const handleShowFewer = () => {
-    setShowAllProjects(false);
-  };
-
-
+  const displayedProjects = projects;
 
   return (
     <section id="projects" className="py-24 bg-secondary/20">
@@ -105,7 +91,7 @@ export default function Projects() {
           {/* Section Header */}
           <motion.div variants={itemVariants} className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold mb-4">
-              {showAllProjects ? 'All' : 'Featured'} <span className="gradient-text">Projects</span>
+              <span className="gradient-text">Projects</span>
             </h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-8">
               Data science projects showcasing ML, analytics, and visualisation skills
@@ -199,63 +185,6 @@ export default function Projects() {
                 </div>
               </motion.div>
             ))}
-          </motion.div>
-
-          {/* Show More/Fewer Button */}
-          <motion.div variants={itemVariants} className="text-center mt-12">
-            {showAllProjects ? (
-              <motion.div
-                key="show-fewer"
-                initial={{ opacity: 0, y: 20, scale: 0.9 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: -20, scale: 0.9 }}
-                transition={{ 
-                  duration: 0.4,
-                  ease: "easeInOut"
-                }}
-              >
-                <Button
-                  variant="outline"
-                  size="lg"
-                  onClick={handleShowFewer}
-                  className="magnetic hover:bg-secondary/50 transition-all duration-300 hover:scale-105 hover:shadow-lg"
-                >
-                  <motion.div
-                    animate={{ rotate: 180 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <ChevronUp className="mr-2 h-4 w-4" />
-                  </motion.div>
-                  Show fewer projects
-                </Button>
-              </motion.div>
-            ) : (
-              <motion.div
-                key="show-more"
-                initial={{ opacity: 0, y: 20, scale: 0.9 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: -20, scale: 0.9 }}
-                transition={{ 
-                  duration: 0.4,
-                  ease: "easeInOut"
-                }}
-              >
-                <Button
-                  variant="outline"
-                  size="lg"
-                  onClick={handleShowMore}
-                  className="magnetic hover:bg-secondary/50 transition-all duration-300 hover:scale-105 hover:shadow-lg"
-                >
-                  <motion.div
-                    animate={{ rotate: 0 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <ChevronDown className="mr-2 h-4 w-4" />
-                  </motion.div>
-                  Show more projects
-                </Button>
-              </motion.div>
-            )}
           </motion.div>
 
           {/* View All GitHub Button */}

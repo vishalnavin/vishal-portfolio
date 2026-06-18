@@ -1,7 +1,6 @@
  import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
 import { useRef } from 'react';
-import { User, Calendar, MapPin } from 'lucide-react';
 import { containerVariants, itemVariants } from '@/components/common/AnimationVariants';
 
 export default function About() {
@@ -35,10 +34,16 @@ export default function About() {
             <motion.div variants={itemVariants} className="lg:pr-6 order-2 lg:order-1">
               <div className="glass p-6 md:p-8 rounded-2xl h-full flex flex-col justify-center">
                 <p className="text-base md:text-lg text-foreground/90 leading-relaxed mb-4 md:mb-6">
-                  I'm a data scientist with a computer science foundation, comfortable across the stack from PySpark pipelines and feature engineering to modelling and decision ready visuals. I focus on building solutions that are practical, explainable and ready for production.
+                  I'm a Data Analyst &amp; Engineer at Accuria Ltd., where I teach machines to read the messy credit paperwork nobody else wants to.
+                </p>
+                <p className="text-base md:text-lg text-foreground/90 leading-relaxed mb-4 md:mb-6">
+                  Before that, I modelled player churn and retention at Rockstar Games (yes, <em>GTA Online</em>).
+                </p>
+                <p className="text-base md:text-lg text-foreground/90 leading-relaxed mb-4 md:mb-6">
+                  Outside work, I'm usually behind a camera or planning the next trip.
                 </p>
                 <p className="text-base md:text-lg text-foreground/90 leading-relaxed">
-                  Recent work includes churn and retention modelling, player behaviour segmentation and geospatial analysis to inform product and strategy. I enjoy photography and travel, which sharpen my eye for patterns and context, the same instincts I bring to data storytelling.
+                  Data scientist in London. Happiest with a clean dataset, a camera, or a one-way ticket.
                 </p>
               </div>
             </motion.div>
@@ -46,9 +51,9 @@ export default function About() {
             {/* Profile Image */}
             <motion.div variants={itemVariants} className="lg:pl-6 order-1 lg:order-2">
               <div className="relative h-64 md:h-full">
-                <img 
-                  src="/vishal-profile.jpg" 
-                  alt="Vishal Navin" 
+                <img
+                  src="/about-vishal.jpg"
+                  alt="Vishal Navin"
                   className="w-full h-full object-cover rounded-2xl shadow-lg"
                 />
                 <div className="absolute inset-0 rounded-2xl bg-gradient-to-t from-primary/20 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300" />

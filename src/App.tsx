@@ -34,7 +34,14 @@ const App = () => {
           <RobotGame active={gameActive} />
           <button
             type="button"
-            onClick={() => setGameActive((a) => !a)}
+            onClick={(e) => {
+              // Ignore keyboard-triggered "clicks" (Space/Enter give detail === 0)
+              // so the game starts only on a real pointer click.
+              if (e.detail === 0) return;
+              // Drop focus so Spacebar can't re-trigger the button afterwards
+              e.currentTarget.blur();
+              setGameActive((a) => !a);
+            }}
             aria-pressed={gameActive}
             className={`game-launch-btn${gameActive ? " game-launch-btn--on" : ""}`}
           >

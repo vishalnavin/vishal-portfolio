@@ -143,8 +143,8 @@ export default function Contact() {
     {
       icon: Linkedin,
       label: 'LinkedIn',
-      value: 'linkedin.com/in/vishal-navin-414518293',
-      href: 'https://linkedin.com/in/vishal-navin-414518293/'
+      value: 'linkedin.com/in/vishal-navin',
+      href: 'https://linkedin.com/in/vishal-navin/'
     },
     {
       icon: Github,
@@ -212,8 +212,8 @@ export default function Contact() {
             </motion.div>
 
             {/* Contact Form */}
-            <motion.div variants={itemVariants}>
-              <div className="glass p-6 md:p-8 rounded-2xl">
+            <motion.div variants={itemVariants} className="h-full">
+              <div className="glass p-6 md:p-8 rounded-2xl h-full flex flex-col">
                 {isSubmitted ? (
                   <motion.div
                     initial={{ opacity: 0, scale: 0.95 }}
@@ -227,18 +227,19 @@ export default function Contact() {
                     </p>
                   </motion.div>
                 ) : (
-                  <form 
+                  <form
                     onSubmit={handleFormSubmit}
                     name="contact"
                     method="POST"
                     data-netlify="true"
                     data-netlify-honeypot="bot-field"
+                    className="flex flex-col flex-1"
                   >
                     <input type="hidden" name="form-name" value="contact" />
                     {/* Honeypot field */}
                     <input type="hidden" name="bot-field" />
-                    
-                    <div className="space-y-6">
+
+                    <div className="flex flex-col gap-6 flex-1">
                       <div>
                         <label htmlFor="name" className="block text-sm font-medium mb-2">
                           Name
@@ -271,7 +272,7 @@ export default function Contact() {
                         />
                       </div>
 
-                      <div>
+                      <div className="flex flex-col flex-1">
                         <label htmlFor="message" className="block text-sm font-medium mb-2">
                           Message
                         </label>
@@ -282,7 +283,7 @@ export default function Contact() {
                           value={formData.message}
                           onChange={handleChange}
                           rows={6}
-                          className="w-full resize-none"
+                          className="w-full resize-none flex-1 min-h-[140px]"
                           placeholder="Tell me about your project or just say hello..."
                         />
                       </div>

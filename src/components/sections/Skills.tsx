@@ -1,28 +1,30 @@
 import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
 import { useRef } from 'react';
+import { Code2, Sparkles, LineChart } from 'lucide-react';
 import { containerVariants, itemVariants } from '@/components/common/AnimationVariants';
 
 const skillCategories = [
   {
-    title: 'Technical',
+    title: 'Languages & Tools',
+    icon: Code2,
     skills: [
-      'Python', 'SQL', 'PySpark', 'Spark', 'Tableau', 
-      'MongoDB', 'R Studio', 'Excel', 'PowerPoint'
+      'Python', 'SQL', 'PySpark', 'Spark', 'R Studio', 'MongoDB', 'Excel', 'PowerPoint'
     ]
   },
   {
-    title: 'Analytics',
+    title: 'Machine Learning & AI',
+    icon: Sparkles,
     skills: [
-      'Predictive Modelling', 'Feature Engineering', 'Geospatial Analysis',
-      'Clustering', 'Data Visualisation', 'Statistical Analysis'
+      'Machine Learning', 'Predictive Modelling', 'NLP',
+      'LLMs / Generative AI', 'RAG', 'Feature Engineering'
     ]
   },
   {
-    title: 'Professional',
+    title: 'Analytics & Visualisation',
+    icon: LineChart,
     skills: [
-      'Stakeholder Engagement', 'Insight Communication', 
-      'Prioritisation', 'Teamwork', 'Project Management'
+      'Clustering', 'Statistical Analysis', 'Geospatial Analysis', 'Data Visualisation', 'Tableau'
     ]
   }
 ];
@@ -30,10 +32,6 @@ const skillCategories = [
 export default function Skills() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
-
-  // Create a long list for marquee effect
-  const allSkills = skillCategories.flatMap(category => category.skills);
-  const marqueeSkills = [...allSkills, ...allSkills]; // Duplicate for seamless loop
 
   return (
     <section id="skills" className="py-24 bg-secondary/20">
@@ -47,88 +45,41 @@ export default function Skills() {
           {/* Section Header */}
           <motion.div variants={itemVariants} className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold mb-4">
-              Skills & <span className="gradient-text">Expertise</span>
+              My <span className="gradient-text">Toolkit</span>
             </h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Technologies and methods I use to deliver outcomes.
+              The technologies and methods behind my work.
             </p>
           </motion.div>
 
-          {/* Skills Marquee */}
-          <motion.div variants={itemVariants} className="mb-16 overflow-hidden relative py-8">
-            <div className="marquee-container relative">
-              <motion.div 
-                className="marquee whitespace-nowrap"
-                animate={{ x: [0, -50] }}
-                transition={{
-                  duration: 25,
-                  repeat: Infinity,
-                  ease: "linear"
-                }}
-              >
-                {marqueeSkills.map((skill, index) => (
-                  <motion.span
-                    key={`${skill}-${index}`}
-                    className="inline-block px-6 py-3 mx-3 bg-gradient-to-r from-primary/15 to-accent-secondary/15 border border-primary/40 rounded-full text-sm font-medium backdrop-blur-sm transition-all duration-300 shadow-sm"
-                    whileHover={{ 
-                      scale: 1.05,
-                      boxShadow: "0 0 15px rgba(139, 92, 246, 0.3)",
-                      borderColor: "rgba(139, 92, 246, 0.6)"
-                    }}
-                  >
-                    {skill}
-                  </motion.span>
-                ))}
-              </motion.div>
-            </div>
-          </motion.div>
-
-          {/* Skills Categories */}
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-            {skillCategories.map((category, categoryIndex) => (
+          {/* Skills Categories — 2×2 grid, each card hugs its own content */}
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 max-w-6xl mx-auto">
+            {skillCategories.map((category) => (
               <motion.div
                 key={category.title}
                 variants={itemVariants}
-                className="glass p-6 md:p-8 rounded-2xl card-hover relative overflow-hidden group"
-                whileHover={{ 
-                  scale: 1.02,
-                  boxShadow: "0 20px 40px rgba(139, 92, 246, 0.1)"
-                }}
+                whileHover={{ y: -4 }}
+                transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+                className="glass p-6 md:p-8 rounded-2xl card-hover h-full"
               >
-                {/* Animated background gradient */}
-                <motion.div
-                  className="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent-secondary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                  initial={{ opacity: 0 }}
-                  whileHover={{ opacity: 1 }}
-                />
-                
-                <div className="relative z-10">
-                  <h3 className="text-xl font-bold mb-6 gradient-text flex items-center">
-                    <div className="w-2 h-2 bg-gradient-primary rounded-full mr-3" />
-                    {category.title}
-                  </h3>
-                  <div className="space-y-3">
-                    {category.skills.map((skill, skillIndex) => (
-                      <motion.div
-                        key={skill}
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
-                        transition={{
-                          delay: 0.3 + categoryIndex * 0.1 + skillIndex * 0.05,
-                          duration: 0.5
-                        }}
-                        className="p-4 rounded-xl bg-secondary/30 hover:bg-secondary/50 transition-all duration-300 border border-transparent hover:border-primary/20 group/skill"
-                        whileHover={{ 
-                          scale: 1.02,
-                          x: 5
-                        }}
-                      >
-                        <span className="text-sm font-medium group-hover/skill:text-primary transition-colors duration-300">
-                          {skill}
-                        </span>
-                      </motion.div>
-                    ))}
+                {/* Category header */}
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="w-11 h-11 rounded-xl bg-gradient-primary flex items-center justify-center shadow-sm">
+                    <category.icon className="h-5 w-5 text-primary-foreground" />
                   </div>
+                  <h3 className="text-xl font-bold">{category.title}</h3>
+                </div>
+
+                {/* Skill chips */}
+                <div className="flex flex-wrap gap-2">
+                  {category.skills.map((skill) => (
+                    <span
+                      key={skill}
+                      className="px-3 py-1.5 text-sm rounded-full bg-primary/10 text-foreground/90 border border-primary/20 hover:border-primary/50 hover:bg-primary/15 transition-colors duration-200"
+                    >
+                      {skill}
+                    </span>
+                  ))}
                 </div>
               </motion.div>
             ))}

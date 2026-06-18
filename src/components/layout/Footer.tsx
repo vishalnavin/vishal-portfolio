@@ -15,7 +15,7 @@ export default function Footer() {
     },
     {
       icon: Linkedin,
-      href: 'https://linkedin.com/in/vishal-navin-414518293/',
+      href: 'https://linkedin.com/in/vishal-navin/',
       label: 'LinkedIn'
     },
     {

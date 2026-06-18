@@ -154,44 +154,86 @@ function drawBrainCell(ctx: Ctx, ex: number, ey: number, idx: number, t: number)
   ctx.restore();
 }
 
-// Build a self-contained, reachable zig-zag course down a tall world.
+// Build a self-contained course that descends in flowing runs: you leap
+// forward across gaps within a run, then a gentle near-vertical switchback
+// reverses direction. Forward gaps require real jumps (the fun part);
+// switchbacks are easy drops so the level never demands a hard reversal jump.
 function buildLevel(vw: number) {
-  const pw = Math.min(170, Math.max(120, vw * 0.16));
   const margin = 50;
-  const dropPerStep = 120; // vertical gap between platforms
   const STEPS = 12;
 
   const platforms: Platform[] = [];
   const cells: Cell[] = [];
+  const gapAfter: boolean[] = []; // did the jump onto platform i cross a real gap?
 
-  // Wide starting platform near the top
+  // Wide, forgiving starting platform near the top
+  let pw = 150;
   const startX = vw / 2 - pw / 2;
-  let py = 220;
+  let py = 200;
   platforms.push({ x: startX, y: py, w: pw + 40 });
+  gapAfter.push(false);
 
-  // Zig-zag descent; horizontal offset stays within a single jump's reach
-  let px = startX;
-  let dir = 1;
+  let dir = 1; // +1 = heading right, -1 = heading left
+  let runLeft = 2 + Math.floor(Math.random() * 2); // platforms left in this run
+
   for (let i = 1; i <= STEPS; i++) {
-    py += dropPerStep;
-    px += dir * (pw * 0.95);
-    if (px < margin) {
-      px = margin;
-      dir = 1;
-    } else if (px > vw - pw - margin) {
-      px = vw - pw - margin;
-      dir = -1;
+    const cur = platforms[i - 1];
+    pw = 130 + Math.round(Math.random() * 30); // 130–160: forgiving landings
+    let nx: number;
+    let drop: number;
+    let crossedGap: boolean;
+
+    if (runLeft > 0) {
+      // Forward leap across a real gap (70–95px edge-to-edge => needs a jump)
+      const gap = 70 + Math.round(Math.random() * 25);
+      drop = 80 + Math.round(Math.random() * 35);
+      nx = dir > 0 ? cur.x + cur.w + gap : cur.x - gap - pw;
+      crossedGap = true;
+      runLeft--;
     } else {
+      // Gentle switchback: mostly a vertical drop, small horizontal step back
       dir *= -1;
+      drop = 95 + Math.round(Math.random() * 25);
+      nx = dir > 0 ? cur.x + 24 : cur.x + cur.w - pw - 24;
+      crossedGap = false;
+      runLeft = 2 + Math.floor(Math.random() * 2);
     }
-    platforms.push({ x: px, y: py, w: pw });
+
+    // Keep inside the play area; if we hit a wall, turn around and drop straight
+    if (nx < margin) {
+      nx = margin;
+      dir = 1;
+      runLeft = 2;
+      crossedGap = false;
+    } else if (nx + pw > vw - margin) {
+      nx = vw - margin - pw;
+      dir = -1;
+      runLeft = 2;
+      crossedGap = false;
+    }
+
+    py += drop;
+    platforms.push({ x: nx, y: py, w: pw });
+    gapAfter.push(crossedGap);
   }
 
-  // Place 5 cells floating just above evenly-spread platforms
-  const cellSteps = [2, 4, 6, 8, 10];
-  cellSteps.forEach((idx) => {
-    const p = platforms[idx];
-    cells.push({ x: p.x + p.w / 2, y: p.y - 34, collected: false });
+  // Float cells over gaps the player leaps across, so they're grabbed mid-jump
+  const gapIdx = platforms.map((_, i) => i).filter((i) => i > 0 && gapAfter[i]);
+  const chosen: number[] = [];
+  const stride = Math.max(1, Math.floor(gapIdx.length / 5));
+  for (let k = 0; k < gapIdx.length && chosen.length < 5; k += stride) chosen.push(gapIdx[k]);
+  // Top up from the remaining gaps if we came up short
+  for (let k = 0; k < gapIdx.length && chosen.length < 5; k++)
+    if (!chosen.includes(gapIdx[k])) chosen.push(gapIdx[k]);
+
+  chosen.forEach((i) => {
+    const a = platforms[i - 1];
+    const b = platforms[i];
+    cells.push({
+      x: (a.x + a.w / 2 + b.x + b.w / 2) / 2,
+      y: Math.min(a.y, b.y) - 30,
+      collected: false,
+    });
   });
 
   const worldBottom = py + 500;
