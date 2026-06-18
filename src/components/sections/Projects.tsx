@@ -55,15 +55,6 @@ const projects: Project[] = [
     featured: true
   },
   {
-    id: 'tab',
-    title: 'TAB (Tabular ML Workflow)',
-    description: 'Lightweight tabular ML workflow for faster experiments.',
-    image: '/project-5.png',
-    repoUrl: 'https://github.com/vishalnavin/tab',
-    tech: ['Python', 'ML', 'Workflow'],
-    featured: true
-  },
-  {
     id: 'breakfast-at-the-frat',
     title: 'Breakfast at the Frat',
     description: 'Playful visualisation of breakfast trends and habits.',
@@ -117,7 +108,7 @@ export default function Projects() {
               {showAllProjects ? 'All' : 'Featured'} <span className="gradient-text">Projects</span>
             </h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-8">
-              Data science projects showcasing ML, analytics, and visualization skills
+              Data science projects showcasing ML, analytics, and visualisation skills
             </p>
           </motion.div>
 

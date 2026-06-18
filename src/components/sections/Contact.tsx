@@ -29,17 +29,15 @@ export default function Contact() {
     setIsSubmitting(true);
 
     try {
-      // Create FormData for Netlify
-      const formDataToSend = new FormData();
-      formDataToSend.append('form-name', 'contact');
-      formDataToSend.append('name', formData.name);
-      formDataToSend.append('email', formData.email);
-      formDataToSend.append('message', formData.message);
-
       const response = await fetch('/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams(formDataToSend as any).toString()
+        body: new URLSearchParams({
+          'form-name': 'contact',
+          name: formData.name,
+          email: formData.email,
+          message: formData.message,
+        }).toString()
       });
 
       console.log('Form submission response:', response.status, response.statusText);
@@ -90,17 +88,15 @@ export default function Contact() {
         });
       } else {
         // In production (Netlify), submit to the actual form
-        const formDataToSend = new FormData();
-        formDataToSend.append('form-name', 'contact');
-        formDataToSend.append('name', formData.name);
-        formDataToSend.append('email', formData.email);
-        formDataToSend.append('message', formData.message);
-
-        // Submit to Netlify using the correct endpoint
         const response = await fetch('/form', {
           method: 'POST',
           headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          body: new URLSearchParams(formDataToSend as any).toString()
+          body: new URLSearchParams({
+            'form-name': 'contact',
+            name: formData.name,
+            email: formData.email,
+            message: formData.message,
+          }).toString()
         });
 
         console.log('Form submission response:', response.status, response.statusText);
