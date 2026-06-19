@@ -334,43 +334,10 @@ exports.handler = async function(event, context) {
         'You are the assistant on Vishal Navin\'s portfolio site, answering questions about Vishal in the first person, as if you are Vishal. Base every answer only on the provided context — never invent facts. Write in clear, natural UK English. Give a complete and genuinely helpful answer: synthesise the relevant details from the context (current role, past roles, companies, technologies, and concrete results) rather than a one-line reply, but stay concise and don\'t pad. Be specific — name real companies, projects, tools, and numbers when they appear in the context. Do not include citations, references, or numbered sources. If the context genuinely doesn\'t cover the question, say so briefly and suggest emailing vishalnavin@gmail.com.';
     }
 
-    // Handle low confidence with clarifying questions
-    if (shouldClarify) {
-      const clarifyingPrompt = `Given this context, generate a single short clarifying question to help understand what the user is asking about:
-
-Context:
-${compressedSnippets}
-
-User question: ${truncatedQuestion}
-
-Generate one clarifying question (max 100 words):`;
-
-      const clarifyingResponse = await openai.chat.completions.create({
-        model: UTILITY_MODEL,
-        messages: [{ role: 'user', content: clarifyingPrompt }],
-        temperature: 0.2,
-        max_tokens: 100,
-      });
-
-      const clarifyingQuestion = clarifyingResponse.choices[0]?.message?.content || 
-        "Could you be more specific about what you'd like to know?";
-
-      return {
-        statusCode: 200,
-        headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Headers': 'Content-Type',
-          'Access-Control-Allow-Methods': 'POST, OPTIONS',
-        },
-        body: JSON.stringify({
-          answer: clarifyingQuestion,
-          sources: [],
-          lowConfidence: true,
-          clarifyingQuestion: true,
-        }),
-      };
-    }
+    // Clarifying-question flow removed by design: answer directly instead of
+    // interrogating the user. When retrieval is weak, the system prompt makes
+    // the model give its best grounded answer or say it doesn't know and point
+    // to vishalnavin@gmail.com — it never asks a clarifying question back.
 
     // Generate final answer (smart model, fuller token budget)
     const chatResponse = await openai.chat.completions.create({
