@@ -9,7 +9,7 @@
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
     "preview": "vite preview",
-    "rag:index": "node scripts/build-index.mjs"
+    "rag:index": "node --env-file-if-exists=.env scripts/build-index.mjs"
   },
   "dependencies": {
     "@pinecone-database/pinecone": "^6.1.2",

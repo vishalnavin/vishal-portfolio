@@ -7,10 +7,17 @@ const RATE_LIMIT_WINDOW = 60 * 60 * 1000; // 1 hour
 const RATE_LIMIT_MAX = 20; // 20 requests per hour
 
 // RAG configuration knobs
-const RAG_TOPK_BASE = parseInt(process.env.RAG_TOPK_BASE) || 6;
+const RAG_TOPK_BASE = parseInt(process.env.RAG_TOPK_BASE) || 8;
 const RAG_TOPK_FINAL = parseInt(process.env.RAG_TOPK_FINAL) || 5;
 const RAG_MMR_LAMBDA = parseFloat(process.env.RAG_MMR_LAMBDA) || 0.7;
 const RAG_SCORE_THRESHOLD = parseFloat(process.env.RAG_SCORE_THRESHOLD) || 0.35;
+
+// Model + answer configuration
+// Smart model for the user-facing answer; cheap model for internal expand/rerank/clarify.
+const ANSWER_MODEL = process.env.OPENAI_ANSWER_MODEL || 'gpt-4o';
+const UTILITY_MODEL = process.env.OPENAI_CHAT_MODEL || 'gpt-4o-mini';
+const ANSWER_MAX_TOKENS = parseInt(process.env.OPENAI_MAX_TOKENS) || 600;
+const SNIPPET_CHARS = parseInt(process.env.RAG_SNIPPET_CHARS) || 800;
 
 function checkRateLimit(clientIP) {
   const now = Date.now();
@@ -40,7 +47,7 @@ async function expandQuery(openai, question) {
 Original: ${question}`;
 
     const response = await openai.chat.completions.create({
-      model: process.env.OPENAI_CHAT_MODEL || 'gpt-4o-mini',
+      model: UTILITY_MODEL,
       messages: [{ role: 'user', content: expansionPrompt }],
       temperature: 0.3,
       max_tokens: 100,
@@ -124,7 +131,7 @@ ${candidates.map((c, i) => `${i + 1}. ${c.metadata.text?.substring(0, 200)}...`)
 Ratings:`;
 
     const response = await openai.chat.completions.create({
-      model: process.env.OPENAI_CHAT_MODEL || 'gpt-4o-mini',
+      model: UTILITY_MODEL,
       messages: [{ role: 'user', content: rerankPrompt }],
       temperature: 0.1,
       max_tokens: 50,
@@ -308,7 +315,7 @@ exports.handler = async function(event, context) {
     // Phase 2: Context Compression (simplified for now)
     const compressedSnippets = finalCandidates.map((match, idx) => {
       const metadata = match.metadata;
-      const text = metadata.text ? metadata.text.substring(0, 300) : ''; // Limit snippet length
+      const text = metadata.text ? metadata.text.substring(0, SNIPPET_CHARS) : ''; // Limit snippet length
       return `[${idx + 1}] ${metadata.title ? `(${metadata.title}) ` : ''}${text}`;
     }).join('\n\n');
 
@@ -320,11 +327,11 @@ exports.handler = async function(event, context) {
     
     let systemPrompt;
     if (isInterviewQuestion) {
-      systemPrompt = process.env.BOT_SYSTEM_PROMPT || 
-        'You are Vishal\'s interview coach and portfolio assistant. Answer as if Vishal is responding in an interview: confident, concise, factual, and grounded in the provided context. Do not include any citations or references in your response.';
+      systemPrompt = process.env.BOT_SYSTEM_PROMPT ||
+        'You are answering as Vishal Navin in a job interview. Speak in the first person ("I"). Be confident, specific, and grounded only in the provided context — never invent facts. Give a substantive answer of a few sentences with concrete examples, real metrics, company names, and technologies where the context provides them. Write in natural UK English. Do not include citations, references, or numbered sources.';
     } else {
-      systemPrompt = process.env.BOT_SYSTEM_PROMPT || 
-        'You are Vishal\'s portfolio assistant. Use only the provided context. Respond in concise UK English. Prefer direct answers when context is sufficient. Do not include any citations, references, or numbered sources in your response. If context is weak, ask one clarifying question; if still unknown, say you don\'t know and suggest contacting Vishal.';
+      systemPrompt = process.env.BOT_SYSTEM_PROMPT ||
+        'You are the assistant on Vishal Navin\'s portfolio site, answering questions about Vishal in the first person, as if you are Vishal. Base every answer only on the provided context — never invent facts. Write in clear, natural UK English. Give a complete and genuinely helpful answer: synthesise the relevant details from the context (current role, past roles, companies, technologies, and concrete results) rather than a one-line reply, but stay concise and don\'t pad. Be specific — name real companies, projects, tools, and numbers when they appear in the context. Do not include citations, references, or numbered sources. If the context genuinely doesn\'t cover the question, say so briefly and suggest emailing vishalnavin@gmail.com.';
     }
 
     // Handle low confidence with clarifying questions
@@ -339,7 +346,7 @@ User question: ${truncatedQuestion}
 Generate one clarifying question (max 100 words):`;
 
       const clarifyingResponse = await openai.chat.completions.create({
-        model: process.env.OPENAI_CHAT_MODEL || 'gpt-4o-mini',
+        model: UTILITY_MODEL,
         messages: [{ role: 'user', content: clarifyingPrompt }],
         temperature: 0.2,
         max_tokens: 100,
@@ -365,10 +372,9 @@ Generate one clarifying question (max 100 words):`;
       };
     }
 
-    // Generate final answer
-    const chatModel = process.env.OPENAI_CHAT_MODEL || 'gpt-4o-mini';
+    // Generate final answer (smart model, fuller token budget)
     const chatResponse = await openai.chat.completions.create({
-      model: chatModel,
+      model: ANSWER_MODEL,
       messages: [
         { role: 'system', content: systemPrompt },
         {
@@ -376,8 +382,8 @@ Generate one clarifying question (max 100 words):`;
           content: `Context:\n${compressedSnippets}\n\nQuestion: ${truncatedQuestion}`,
         },
       ],
-      temperature: 0.2,
-      max_tokens: 220, // Explicit token limit as specified
+      temperature: 0.3,
+      max_tokens: ANSWER_MAX_TOKENS,
     });
 
     const answer = chatResponse.choices[0]?.message?.content || 'Sorry, I could not generate a response.';

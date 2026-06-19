@@ -71,7 +71,17 @@ async function buildIndex() {
     });
     const embeddingDimension = testEmbedding.data[0].embedding.length;
     console.log(`📏 Embedding dimension: ${embeddingDimension}`);
-    
+
+    // Clear existing vectors so the rebuild is clean (removes deleted/renamed
+    // files and stale chunks instead of leaving orphans behind).
+    console.log('🧹 Clearing existing vectors for a clean rebuild...');
+    try {
+      await index.deleteAll();
+      console.log('   ✅ Cleared existing vectors');
+    } catch (error) {
+      console.warn(`   ⚠️ Could not clear index (continuing anyway): ${error.message}`);
+    }
+
     let totalChunks = 0;
     
     for (const file of files) {
