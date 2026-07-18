@@ -11,10 +11,10 @@ const experiences = [
     location: 'London',
     period: 'Nov 2025 – Present',
     description: [
-      'Maintain and automate ETL and data processing pipelines for credit portfolio and securitisation datasets.',
-      'Support AI-based data mapping and extraction from structured and unstructured sources (Excel/PDF).',
-      'Refine YAML/JSON templates for automated data quality checks and parsing.',
-      'Collaborate with stakeholders on complex credit data, valuation algorithms, and reporting needs.'
+      'Built and automated Python/R pipelines for loan-level securitisation, ABCP, covered bond and private debt data.',
+      'Onboard new transactions, turning legal agreements and investor reports into data mappings and automated monitoring tests.',
+      'Developed AI-assisted workflows to extract and verify covenants, portfolio tests and triggers from Excel, PDF and legal docs.',
+      'Own portfolio-data validation and ESMA regulatory reporting across European institutions.'
     ]
   },
   {

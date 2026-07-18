@@ -67,7 +67,7 @@ const projects: Project[] = [
     title: 'Space Invaders Game',
     description: 'Retro clone demonstrating core game-loop logic.',
     image: '/project-8.png',
-    repoUrl: 'https://github.com/vishalnavin/space-invaders',
+    repoUrl: 'https://github.com/vishalnavin/Spaceinvaders-game',
     tech: ['Python', 'Game Development', 'Logic'],
     featured: false
   }

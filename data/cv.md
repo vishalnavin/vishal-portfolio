@@ -1,14 +1,14 @@
 # Curriculum Vitae
 
 ## Current role
-- **Data Analyst & Engineer**, Accuria Ltd. (London) — Nov 2025 to present. Building and automating ETL pipelines for credit portfolio and securitisation data, plus AI-based extraction from structured and unstructured sources (Excel/PDF).
+- **Data Analyst & Engineer**, Accuria Ltd. (London) — Nov 2025 to present. Building and automating Python/R pipelines for loan-level securitisation, ABCP, covered bond and private debt data; AI-assisted extraction and verification of covenants, portfolio tests and triggers from Excel, PDF and legal documentation; and end-to-end ESMA regulatory reporting across European institutions.
 
 ## Education
 - **MSc Business Analytics**, Imperial College London — Aug 2023 to Aug 2024, Merit.
 - **BSc Computer Science**, University of Leicester — 2019 to 2022, First-Class Honours.
 
 ## Experience
-- **Accuria Ltd.** — Data Analyst & Engineer (Nov 2025–present): credit/securitisation data pipelines, AI-driven document extraction, automated data-quality checks.
+- **Accuria Ltd.** — Data Analyst & Engineer (Nov 2025–present): Python/R pipelines for loan-level securitisation, ABCP, covered bond and private debt data; transaction onboarding via data mappings and automated monitoring tests; AI-assisted extraction and verification of covenants, portfolio tests and triggers; portfolio-data validation and reconciliation; ESMA regulatory reporting across European institutions.
 - **Rockstar Games** — Data Scientist Intern (Jan–May 2025, London): engineered 40+ behavioural features in PySpark/Databricks to model churn and retention on GTA Online; built Random Forest churn models and K-Means retention segments; ran geospatial heatmaps in Tableau to inform game-design decisions.
 - **Coalition Greenwich (CRISIL)** — Associate Consultant (Jun–Aug 2024, London): improved revenue-forecast accuracy by ~13% using Random Forest with lag/volatility features; reduced ETL runtime by 30% on 500k+ rows; introduced a quantitative forecasting framework for decision-ready reporting.
 - **Pricerite Wholesalers** — Data Scientist (Jun 2022–Jul 2023): RFM + K-Means increased retention ~10%; stock-allocation guidance saved ~£24k/year and improved efficiency ~25%; delivered operational dashboards.
